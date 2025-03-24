@@ -1,7 +1,10 @@
 import React, { useState, useEffect, useCallback } from "react";
 
 // import styles
-import "./styles/styles.scss";
+import "@styles/global.scss";
+
+// import components
+import Main from "@layout/Main/Main.jsx";
 
 /**
  * Represents the main application component that dynamically adjusts its resolution
@@ -14,7 +17,7 @@ function App() {
   // Extracted constants for better readability
   const MIN_WIDTH = 800;
   const MIN_HEIGHT = 600;
-  const MAX_HEIGHT = 1200;
+  const MAX_HEIGHT = MIN_HEIGHT * 2;
 
   const [gameResolution, setGameResolution] = useState({
     baseWidth: MIN_WIDTH,
@@ -65,17 +68,12 @@ function App() {
   const containerStyles = {
     width: `${currentWidth}px`,
     height: `${currentHeight}px`,
-    backgroundColor: "#000", // Game background
     margin: "auto",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    color: "white",
   };
 
   return (
     <div className="game-container" style={containerStyles}>
-      <h1>Heroes of JavaScript and Magic III</h1>
+      <Main />
     </div>
   );
 }
