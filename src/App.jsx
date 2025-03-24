@@ -23,6 +23,8 @@ function App() {
     currentHeight: MIN_HEIGHT,
   });
 
+  const { baseWidth, baseHeight, currentWidth, currentHeight } = gameResolution;
+
   /**
    * Calculates and sets a responsive game resolution based on the current window height
    * while maintaining the original aspect ratio. Ensures the resolution stays within
@@ -44,7 +46,7 @@ function App() {
       currentWidth: calculatedWidth,
       currentHeight: calculatedHeight,
     }));
-  }, [gameResolution.baseWidth, gameResolution.baseHeight]);
+  }, [baseWidth, baseHeight]);
 
   useEffect(() => {
     // Calculate initial resolution
@@ -59,8 +61,6 @@ function App() {
     };
   }, [calculateResponsiveResolution]);
 
-  const { currentWidth, currentHeight } = gameResolution;
-
   // Extracted styles into a constant
   const containerStyles = {
     width: `${currentWidth}px`,
@@ -74,7 +74,7 @@ function App() {
   };
 
   return (
-    <div style={containerStyles}>
+    <div className="game-container" style={containerStyles}>
       <h1>Heroes of JavaScript and Magic III</h1>
     </div>
   );
