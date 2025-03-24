@@ -1,1 +1,6 @@
-@import '_reset.scss';
+@use '_reset.scss';
+
+body {
+  background-image: url("../assets/images/stars-bg.png");
+  background-size: cover;
+}
