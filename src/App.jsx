@@ -3,9 +3,6 @@ import React, { useState, useEffect, useCallback } from "react";
 // import styles
 import "@styles/global.scss";
 
-// import components
-import Main from "@layout/Main/Main.jsx";
-
 /**
  * Represents the main application component that dynamically adjusts its resolution
  * based on the window's size, while maintaining an aspect ratio and specific resolution bounds.
@@ -15,8 +12,9 @@ import Main from "@layout/Main/Main.jsx";
  */
 function App() {
   // Extracted constants for better readability
-  const MIN_WIDTH = 800;
-  const MIN_HEIGHT = 600;
+  const SCREEN_PADDING = 80 * 2;
+  const MIN_WIDTH = 800 - SCREEN_PADDING;
+  const MIN_HEIGHT = 600 - SCREEN_PADDING;
   const MAX_HEIGHT = MIN_HEIGHT * 2;
 
   const [gameResolution, setGameResolution] = useState({
@@ -34,16 +32,38 @@ function App() {
    * specified minimum and maximum boundaries.
    */
   const calculateResponsiveResolution = useCallback(() => {
-    const { baseWidth, baseHeight } = gameResolution;
-    const aspectRatio = baseWidth / baseHeight;
+    // Define the aspect ratio
+    const aspectRatio = 4 / 3;
+
+    // Calculate available width accounting for parent padding on both sides
+    const availableWidth = window.innerWidth - SCREEN_PADDING;
 
     // Ensure the resolution stays between MIN_HEIGHT and MAX_HEIGHT
-    const calculatedHeight = Math.max(
-      MIN_HEIGHT,
-      Math.min(window.innerHeight, MAX_HEIGHT),
-    );
-    const calculatedWidth = Math.round(calculatedHeight * aspectRatio);
+    const calculatedHeight = Math.max(MIN_HEIGHT, Math.min(window.innerHeight - SCREEN_PADDING, MAX_HEIGHT));
 
+    // Ensure the resolution stays between MIN_HEIGHT and MAX_HEIGHT
+    let calculatedWidth = Math.round(calculatedHeight * aspectRatio);
+
+    // Check if the calculated width exceeds available width
+    if (calculatedWidth > availableWidth) {
+      // If width exceeds available space, constrain it to available width
+      calculatedWidth = availableWidth;
+
+      // Adjust height proportionally to maintain aspect ratio
+      const newHeight = Math.round(calculatedWidth / aspectRatio);
+
+      // Check if the new height satisfies our min/max constraints
+      if (newHeight >= MIN_HEIGHT && newHeight <= MAX_HEIGHT) {
+        setGameResolution((prev) => ({
+          ...prev,
+          currentWidth: calculatedWidth,
+          currentHeight: newHeight,
+        }));
+        return;
+      }
+    }
+
+    // Update the game resolution state with calculated dimensions
     setGameResolution((prev) => ({
       ...prev,
       currentWidth: calculatedWidth,
@@ -68,12 +88,11 @@ function App() {
   const containerStyles = {
     width: `${currentWidth}px`,
     height: `${currentHeight}px`,
-    margin: "auto",
   };
 
   return (
-    <div className="game-container" style={containerStyles}>
-      <Main />
+    <div className="main-container">
+      <div className="main-menu-container" style={containerStyles}></div>
     </div>
   );
 }

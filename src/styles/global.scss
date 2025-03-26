@@ -1,6 +1,41 @@
-@use '_reset.scss';
+@use "_reset.scss";
 
+// TODO: think about styles
+html,
 body {
-  background-image: url("../assets/images/stars-bg.png");
-  background-size: cover;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#root {
+  height: 100%;
+}
+
+.main-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: 80px;
+  background-image: url("@images/brown-leather-bg.png");
+  border-image: url("@images/game-border.png") 48 fill / 48px / 0;
+}
+
+.main-menu-container {
+  background-image: url("@assets/gifs/main.gif");
+  background-size: contain;
+  border-image: url("@images/golden-border.png") 4 fill / 4px / 4;
+}
+
+@media (max-height: 600px) {
+  #root {
+    height: auto;
+    min-height: 100%;
+  }
+
+  .main-container {
+    align-items: flex-start;
+  }
 }
