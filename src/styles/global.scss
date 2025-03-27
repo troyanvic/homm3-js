@@ -8,6 +8,10 @@ body {
   padding: 0;
 }
 
+body {
+  cursor: url("@images/cursors/cursor-normal.png"), auto;
+}
+
 #root {
   height: 100%;
 }
