@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 // import styles
 import "@styles/global.scss";
 
 /**
- * Represents the main application component that dynamically adjusts its resolution
+ * Represents the main application component that dynamically adjusts the menu screen resolution
  * based on the window's size, while maintaining an aspect ratio and specific resolution bounds.
  * The component calculates and sets a responsive resolution ranging from 800x600 to 1600x1200.
  *
@@ -17,17 +17,17 @@ function App() {
   const MIN_HEIGHT = 600 - SCREEN_PADDING;
   const MAX_HEIGHT = MIN_HEIGHT * 2;
 
-  const [gameResolution, setGameResolution] = useState({
+  const [menuScreenResolution, setMenuScreenResolution] = useState({
     baseWidth: MIN_WIDTH,
     baseHeight: MIN_HEIGHT,
     currentWidth: MIN_WIDTH,
     currentHeight: MIN_HEIGHT,
   });
 
-  const { baseWidth, baseHeight, currentWidth, currentHeight } = gameResolution;
+  const { baseWidth, baseHeight, currentWidth, currentHeight } = menuScreenResolution;
 
   /**
-   * Calculates and sets a responsive game resolution based on the current window height
+   * Calculates and sets a responsive menu screen resolution based on the current window height
    * while maintaining the original aspect ratio. Ensures the resolution stays within
    * specified minimum and maximum boundaries.
    */
@@ -54,7 +54,7 @@ function App() {
 
       // Check if the new height satisfies our min/max constraints
       if (newHeight >= MIN_HEIGHT && newHeight <= MAX_HEIGHT) {
-        setGameResolution((prev) => ({
+        setMenuScreenResolution((prev) => ({
           ...prev,
           currentWidth: calculatedWidth,
           currentHeight: newHeight,
@@ -64,7 +64,7 @@ function App() {
     }
 
     // Update the game resolution state with calculated dimensions
-    setGameResolution((prev) => ({
+    setMenuScreenResolution((prev) => ({
       ...prev,
       currentWidth: calculatedWidth,
       currentHeight: calculatedHeight,
@@ -92,7 +92,11 @@ function App() {
 
   return (
     <div className="main-container">
-      <div className="main-menu-container" style={containerStyles}></div>
+      {window.innerWidth >= 768 ? (
+        <div className="main-menu-container" style={containerStyles}></div>
+      ) : (
+        <div>no support screen message</div>
+      )}
     </div>
   );
 }
