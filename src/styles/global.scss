@@ -1,6 +1,5 @@
 @use "_reset.scss";
 
-// TODO: think about styles
 html,
 body {
   height: 100%;
@@ -25,12 +24,6 @@ body {
   padding: 80px;
   background-image: url("@images/brown-leather-bg.png");
   border-image: url("@images/game-border.png") 48 fill / 48px / 0;
-}
-
-.main-menu-container {
-  background-image: url("@assets/gifs/main.gif");
-  background-size: contain;
-  border-image: url("@images/golden-border.png") 4 fill / 4px / 4;
 }
 
 @media (max-height: 600px) {
