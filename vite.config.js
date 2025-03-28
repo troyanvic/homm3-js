@@ -21,4 +21,16 @@ export default defineConfig({
       "@utils": path.resolve(__dirname, "./src/utils"),
     },
   },
+  css: {
+    modules: {
+      localsConvention: "camelCase",
+      generateScopedName: "[local]_[hash:base64:5]",
+      pattern: /\.module\.(scss|sass|css)$/,
+    },
+    preprocessorOptions: {
+      scss: {
+        additionalData: `@use "@styles/variables.scss";`,
+      },
+    },
+  },
 });
