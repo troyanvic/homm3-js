@@ -10,7 +10,7 @@ body {
 }
 
 body {
-  cursor: url("@images/cursors/cursor-normal.png"), auto;
+  cursor: url("@cursors/cursor-normal.png"), auto;
   @include fnt.Century("Century Normal", 800, normal);
   font-size: 15px;
   letter-spacing: 1px;
