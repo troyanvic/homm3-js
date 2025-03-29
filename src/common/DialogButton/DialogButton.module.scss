@@ -1,0 +1,40 @@
+/* src/common/DialogButton/DialogButton.module.scss */
+
+/**
+ * The `button` mixin generates styles for dialog button variations.
+ * It creates styles for active and disabled states based on the provided button type.
+ *
+ * Parameters:
+ * $type (required) - The type of the button (e.g., "ok", "cancel") used to dynamically set class names and background images.
+ */
+@mixin button($type) {
+  &--#{$type} {
+    &--active {
+      background-image: url("@buttons/dialog-btn-#{$type}.png");
+
+      &:active {
+        &:hover {
+          background-image: url("@buttons/dialog-btn-#{$type}-clicked.png");
+        }
+      }
+    }
+
+    &--disabled {
+      background-image: url("@buttons/dialog-btn-#{$type}-disabled.png");
+      pointer-events: none;
+    }
+  }
+}
+
+.dialog-btn {
+  width: 64px;
+  height: 30px;
+  margin: 0 10px;
+  cursor: url("@cursors/cursor-normal.png"), auto;
+  background-color: transparent;
+  border: none;
+  outline: 1px solid #a88d44;
+
+  @include button(ok);
+  @include button(cancel);
+}

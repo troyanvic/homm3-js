@@ -10,6 +10,7 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
       "@assets": path.resolve(__dirname, "./src/assets"),
       "@images": path.resolve(__dirname, "./src/assets/images"),
+      "@buttons": path.resolve(__dirname, "./src/assets/images/buttons"),
       "@fonts": path.resolve(__dirname, "./src/assets/fonts"),
       "@cursors": path.resolve(__dirname, "./src/assets/cursors"),
       "@constants": path.resolve(__dirname, "./src/constants"),
