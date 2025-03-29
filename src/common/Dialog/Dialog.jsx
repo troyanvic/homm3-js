@@ -4,7 +4,7 @@ import { memo } from "react";
 import styles from "./Dialog.module.scss";
 
 // import constants
-import { BUTTON_TYPE_OK, BUTTON_TYPE_CANCEL } from "@constants";
+import { BUTTON_TYPE_OK, BUTTON_TYPE_CANCEL, STATE_ACTIVE, STATE_DISABLED } from "@constants";
 
 // import components
 import DialogButton from "@common/DialogButton/DialogButton.jsx";
@@ -12,32 +12,41 @@ import DialogButton from "@common/DialogButton/DialogButton.jsx";
 /**
  * Dialog Component
  *
- * A functional component that renders a customizable dialog. It displays a message along with optional
- * buttons for confirming or cancelling an action. The appearance and functionality are controlled
- * by props passed to the component.
+ * A functional component that renders a customizable modal dialog. It displays a message and optional
+ * buttons for confirming or canceling an action. The appearance, behavior, and accessibility of the
+ * dialog are controlled via the props passed to it.
  *
  * Props:
  * - isOpen (boolean): Determines whether the dialog is visible. Default is `false`.
- * - type (string): Specifies the dialog type (affects styling). Default is `"message"`.
- * - message (string): The text message to display in the dialog.
- * - hasCancel (boolean): If `true`, renders a cancel button. Default is `false`.
+ * - type (string): Specifies the dialog type affecting its styling (e.g., "message", "warning"). Default is `"message"`.
+ * - message (string): The main text content displayed in the dialog.
+ * - hasCancel (boolean): Indicates if a cancel button will be rendered. Default is `false`.
+ * - isOkDisabled (boolean): Disables the confirm button when `true`. Default is `false`.
+ * - isCancelDisabled (boolean): Disables the cancel button when `true`. Default is `false`.
  * - onConfirm (function): Callback triggered when the confirm button is clicked.
- * - onCancel (function): Callback triggered when the cancel button is clicked (when `hasCancel` is `true`).
+ * - onCancel (function): Callback triggered when the cancel button is clicked (if `hasCancel` is `true`).
  *
  * Styles:
- * - The styles are applied dynamically based on the `type` prop.
+ * - CSS modules are used to dynamically apply styling based on the `type` prop.
+ * - Class names follow the convention: `dialog--type-{type}` and `dialog-text--type-{type}`.
  *
  * Dependencies:
- * - DialogButton: A reusable button component for confirming or cancelling actions.
- * - Imported styling from `Dialog.module.scss`.
+ * - DialogButton: A reusable button component that supports different types (OK, Cancel) and states (active, disabled).
+ * - Styling from `Dialog.module.scss` for layout and theming.
+ *
+ * Accessibility:
+ * - Renders conditionally based on the `isOpen` prop to ensure proper semantics.
+ * - Buttons support disabled states for enhanced usability.
  *
  * Example Usage:
  * ```jsx
  * <Dialog
  *   isOpen={true}
- *   type="message"
- *   message="Are you sure you want to proceed?"
+ *   type="warning"
+ *   message="This action cannot be undone. Are you sure?"
  *   hasCancel={true}
+ *   isOkDisabled={false}
+ *   isCancelDisabled={false}
  *   onConfirm={handleConfirm}
  *   onCancel={handleCancel}
  * />
@@ -47,6 +56,8 @@ const Dialog = memo(function Dialog({
   isOpen = false,
   type = "message",
   message,
+  isOkDisabled = false,
+  isCancelDisabled = false,
   hasCancel = false,
   onConfirm,
   onCancel,
@@ -59,8 +70,18 @@ const Dialog = memo(function Dialog({
       <div className={dialogClassNames}>
         <p className={dialogTextClassNames}>{message}</p>
         <div className={styles.dialogControls}>
-          <DialogButton type={BUTTON_TYPE_OK} onClick={onConfirm} />
-          {hasCancel && <DialogButton type={BUTTON_TYPE_CANCEL} onClick={onCancel} />}
+          <DialogButton
+            type={BUTTON_TYPE_OK}
+            state={isOkDisabled ? STATE_DISABLED : STATE_ACTIVE}
+            onClick={onConfirm}
+          />
+          {hasCancel && (
+            <DialogButton
+              type={BUTTON_TYPE_CANCEL}
+              state={isCancelDisabled ? STATE_DISABLED : STATE_ACTIVE}
+              onClick={onCancel}
+            />
+          )}
         </div>
       </div>
     )
