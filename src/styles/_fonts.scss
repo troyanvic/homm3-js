@@ -1,0 +1,21 @@
+@font-face {
+  font-family: "Century Regular";
+  src: url("@fonts/Century/Century-Regular.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: "Century Normal";
+  src: url("@fonts/Century/Century-Normal.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 400;
+}
+
+@mixin Century($font: "Century Normal", $weight: 400, $style: normal) {
+  font-family:
+    #{$font},
+    serif;
+  font-weight: $weight;
+  font-style: $style;
+}
