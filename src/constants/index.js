@@ -2,6 +2,10 @@
 export const STATE_ACTIVE = "active";
 export const STATE_DISABLED = "disabled";
 
+// Languages
+export const LANGUAGE_EN = "en";
+export const LANGUAGE_UK = "uk";
+
 // Dialogs
 export const DIALOG_TYPE_MESSAGE = "message";
 

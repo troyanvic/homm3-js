@@ -18,6 +18,8 @@ export default defineConfig({
       "@components": path.resolve(__dirname, "./src/components"),
       "@context": path.resolve(__dirname, "./src/context"),
       "@hooks": path.resolve(__dirname, "./src/hooks"),
+      "@i18n": path.resolve(__dirname, "./src/i18n"),
+      "@locales": path.resolve(__dirname, "./src/locales"),
       "@layout": path.resolve(__dirname, "./src/layout"),
       "@pages": path.resolve(__dirname, "./src/pages"),
       "@services": path.resolve(__dirname, "./src/services"),
