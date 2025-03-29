@@ -9,6 +9,7 @@ export default defineConfig({
     setupFiles: "./src/test/setup.js",
     alias: {
       "@constants": "/src/constants/index.js",
+      "@common": "/src/common",
     },
   },
 });
