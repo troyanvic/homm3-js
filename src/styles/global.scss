@@ -1,4 +1,6 @@
 @use "_reset.scss";
+@use "_fonts.scss" as fnt;
+@use "_mixins.scss" as mx;
 
 html,
 body {
@@ -9,6 +11,12 @@ body {
 
 body {
   cursor: url("@images/cursors/cursor-normal.png"), auto;
+  @include fnt.Century("Century Normal", 800, normal);
+  font-size: 15px;
+  letter-spacing: 1px;
+  line-height: 1.25;
+  text-shadow: 2px 1px 1px #000;
+  color: #f9f2da;
 }
 
 #root {
@@ -16,14 +24,11 @@ body {
 }
 
 .main-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
+  @include mx.full-flex-height-container;
   padding: 80px;
   background-image: url("@images/brown-leather-bg.png");
-  border-image: url("@images/game-border.png") 48 fill / 48px / 0;
+  @include mx.border(blue);
+  //border-image: url("@images/game-border.png") 48 fill / 48px / 0;
 }
 
 @media (max-height: 600px) {

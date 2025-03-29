@@ -1,0 +1,23 @@
+/**
+ * Mixin to create a flexible container that occupies the full height and width
+ * of its parent while centering its content both horizontally and vertically.
+ */
+@mixin full-flex-height-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+/**
+ * Mixin to apply a custom border with a specified color.
+ * Replaces the placeholder in the URL with the provided color to load the correct border image.
+ *
+ * Available values:
+ * - blue
+ * - red
+ */
+@mixin border($color) {
+  border-image: url("@images/borders/border-#{$color}.png") 48 fill / 48px / 0;
+}
