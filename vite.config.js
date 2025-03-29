@@ -13,6 +13,7 @@ export default defineConfig({
       "@buttons": path.resolve(__dirname, "./src/assets/images/buttons"),
       "@fonts": path.resolve(__dirname, "./src/assets/fonts"),
       "@cursors": path.resolve(__dirname, "./src/assets/cursors"),
+      "@sounds": path.resolve(__dirname, "./src/assets/sounds"),
       "@constants": path.resolve(__dirname, "./src/constants"),
       "@common": path.resolve(__dirname, "./src/common"),
       "@components": path.resolve(__dirname, "./src/components"),
