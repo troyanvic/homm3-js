@@ -11,7 +11,6 @@ import buttonClickSound from "@sounds/button-click.ogg";
 import { BUTTON_TYPE_OK, STATE_ACTIVE, STATE_DISABLED } from "@constants";
 
 // import selectors
-
 import { selectEffectsVolume } from "@slices/systemOptionsSlice.js";
 
 /**
@@ -28,12 +27,15 @@ import { selectEffectsVolume } from "@slices/systemOptionsSlice.js";
 const DialogButton = memo(function Button({ type = BUTTON_TYPE_OK, state = STATE_ACTIVE, onClick }) {
   // get Redux state
   const effectsVolume = useSelector(selectEffectsVolume);
+
   // Create references
   const audioRef = useRef(new Audio(buttonClickSound));
   const timeoutRef = useRef(null);
 
   useEffect(() => {
     const audio = audioRef.current;
+
+    if (!audio) return;
 
     // Preload the audio for faster playback
     audio.preload = "auto";
@@ -50,6 +52,8 @@ const DialogButton = memo(function Button({ type = BUTTON_TYPE_OK, state = STATE
     if (state === STATE_DISABLED) return;
 
     const audio = audioRef.current;
+
+    if (!audio) return;
 
     // Reset the audio and play it
     audio.currentTime = 0;
