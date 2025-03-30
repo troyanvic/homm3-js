@@ -1,4 +1,5 @@
 import { memo, useRef, useEffect } from "react";
+import { useSelector } from "react-redux";
 
 // import styles
 import styles from "./DialogButton.module.scss";
@@ -8,6 +9,10 @@ import buttonClickSound from "@sounds/button-click.ogg";
 
 // import constants
 import { BUTTON_TYPE_OK, STATE_ACTIVE, STATE_DISABLED } from "@constants";
+
+// import selectors
+
+import { selectEffectsVolume } from "@slices/systemOptionsSlice.js";
 
 /**
  * DialogButton is a functional component for rendering styled buttons used in dialog interactions.
@@ -21,6 +26,8 @@ import { BUTTON_TYPE_OK, STATE_ACTIVE, STATE_DISABLED } from "@constants";
  */
 // TODO: Resolve a problem with calling an audio effect as many times as the component mounted
 const DialogButton = memo(function Button({ type = BUTTON_TYPE_OK, state = STATE_ACTIVE, onClick }) {
+  // get Redux state
+  const effectsVolume = useSelector(selectEffectsVolume);
   // Create references
   const audioRef = useRef(new Audio(buttonClickSound));
   const timeoutRef = useRef(null);
@@ -30,6 +37,9 @@ const DialogButton = memo(function Button({ type = BUTTON_TYPE_OK, state = STATE
 
     // Preload the audio for faster playback
     audio.preload = "auto";
+
+    // Set the system audio volume
+    audio.volume = effectsVolume;
 
     // Pause the audio on component unmount
     return () => audio.pause();
