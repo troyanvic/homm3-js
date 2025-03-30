@@ -1,8 +1,14 @@
+import { useSelector } from "react-redux";
+
 // import styles
 import "@styles/global.scss";
 
+// import selectors
+import { selectIsShowingMainMenu } from "@slices/menuLayoutSlice.js";
+
 // import components
 import MainMenu from "@layout/MainMenu/MainMenu.jsx";
+import StartGame from "@components/StartGame/StartGame.jsx";
 
 /**
  * The main application component renders a dynamic layout based on the screen width.
@@ -12,11 +18,20 @@ import MainMenu from "@layout/MainMenu/MainMenu.jsx";
  *
  * @return {JSX.Element} The main application interface with a responsive design.
  */
+// TODO: connect the DialogButton to effectsVolume
+// TODO: add playing music
+// TODO: add favicon
+// TODO: add responsive message
 function App() {
-  return (
+  // get Redux state
+  const isShowingMainMenu = useSelector(selectIsShowingMainMenu);
+
+  return isShowingMainMenu ? (
     <div className="main-container">
-      {window.innerWidth >= 768 ? <MainMenu /> : <div>no support screen message</div>}
+      {window.innerWidth >= 768 ? <MainMenu /> : <div>no support small screen resolution message</div>}
     </div>
+  ) : (
+    <StartGame />
   );
 }
 

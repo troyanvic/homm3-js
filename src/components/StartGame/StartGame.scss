@@ -1,0 +1,6 @@
+@use "@styles/mixins.scss" as mx;
+
+.start-game {
+  @include mx.full-flex-height-container;
+  background-image: url("@images/stars-bg.png");
+}
