@@ -1,7 +1,17 @@
 import { useState, useEffect, useCallback } from "react";
+import { useSelector } from "react-redux";
 
 // import styles
 import "./MainMenu.scss";
+
+// import music
+import mainTheme from "@sounds/main-theme.mp3";
+
+// import selectors
+import { selectMusicVolume } from "@slices/systemOptionsSlice.js";
+
+// import components
+import BackgroundMusic from "@components/BackgroundMusic/BackgroundMusic.jsx";
 
 /**
  * The `MainMenu` function is a React component that renders a dynamically resizable menu
@@ -27,6 +37,9 @@ function MainMenu() {
   });
 
   const { baseWidth, baseHeight, currentWidth, currentHeight } = menuScreenResolution;
+
+  // Get the global music volume from Redux state
+  const musicVolume = useSelector(selectMusicVolume);
 
   /**
    * Dynamically calculates the menu's size based on the window's dimensions while keeping
@@ -90,7 +103,11 @@ function MainMenu() {
     height: `${currentHeight}px`,
   };
 
-  return <div className="main-menu-container" style={containerStyles}></div>;
+  return (
+    <div className="main-menu-container" style={containerStyles}>
+      {musicVolume !== 0 && <BackgroundMusic src={mainTheme} />}
+    </div>
+  );
 }
 
 export default MainMenu;
