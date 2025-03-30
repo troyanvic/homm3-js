@@ -35,6 +35,7 @@ export const { setMusicVolume, setEffectsVolume } = systemOptionsSlice.actions;
 
 // export selectors
 export const selectEffectsVolume = (state) => state.systemOptions.effectsVolume;
+export const selectMusicVolume = (state) => state.systemOptions.musicVolume;
 
 // export reducer
 export default systemOptionsSlice.reducer;
