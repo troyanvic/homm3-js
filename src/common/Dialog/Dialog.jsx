@@ -20,6 +20,7 @@ import DialogButton from "@common/DialogButton/DialogButton.jsx";
  * - isOpen (boolean): Determines whether the dialog is visible. Default is `false`.
  * - type (string): Specifies the dialog type affecting its styling (e.g., "message", "warning"). Default is `"message"`.
  * - message (string): The main text content displayed in the dialog.
+ * - hasActions (boolean): Indicates if actions button will be rendered. Default is `true`.
  * - hasCancel (boolean): Indicates if a cancel button will be rendered. Default is `false`.
  * - isOkDisabled (boolean): Disables the confirm button when `true`. Default is `false`.
  * - isCancelDisabled (boolean): Disables the cancel button when `true`. Default is `false`.
@@ -44,6 +45,7 @@ import DialogButton from "@common/DialogButton/DialogButton.jsx";
  *   isOpen={true}
  *   type="warning"
  *   message="This action cannot be undone. Are you sure?"
+ *   hasActions={true}
  *   hasCancel={true}
  *   isOkDisabled={false}
  *   isCancelDisabled={false}
@@ -58,6 +60,7 @@ const Dialog = memo(function Dialog({
   message,
   isOkDisabled = false,
   isCancelDisabled = false,
+  hasActions = true,
   hasCancel = false,
   onConfirm,
   onCancel,
@@ -69,20 +72,22 @@ const Dialog = memo(function Dialog({
     isOpen && (
       <div className={dialogClassNames}>
         <p className={dialogTextClassNames}>{message}</p>
-        <div className={styles.dialogControls}>
-          <DialogButton
-            type={BUTTON_TYPE_OK}
-            state={isOkDisabled ? STATE_DISABLED : STATE_ACTIVE}
-            onClick={onConfirm}
-          />
-          {hasCancel && (
+        {hasActions && (
+          <div className={styles.dialogActions}>
             <DialogButton
-              type={BUTTON_TYPE_CANCEL}
-              state={isCancelDisabled ? STATE_DISABLED : STATE_ACTIVE}
-              onClick={onCancel}
+              type={BUTTON_TYPE_OK}
+              state={isOkDisabled ? STATE_DISABLED : STATE_ACTIVE}
+              onClick={onConfirm}
             />
-          )}
-        </div>
+            {hasCancel && (
+              <DialogButton
+                type={BUTTON_TYPE_CANCEL}
+                state={isCancelDisabled ? STATE_DISABLED : STATE_ACTIVE}
+                onClick={onCancel}
+              />
+            )}
+          </div>
+        )}
       </div>
     )
   );

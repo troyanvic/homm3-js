@@ -15,8 +15,7 @@
   box-shadow: 8px 8px 1px rgba(0, 0, 0, 0.75);
 
   &--type-message {
-    min-width: 300px;
-    max-width: 400px;
+    min-width: 260px;
     padding: 35px 30px 30px 30px;
   }
 
@@ -30,9 +29,22 @@
     }
   }
 
-  &-controls {
+  &-actions {
     display: flex;
     justify-content: center;
     margin-top: 24px;
+  }
+
+  @media (min-width: 375px) {
+    &--type-message {
+      min-width: 300px;
+    }
+  }
+
+  @media (min-width: 480px) {
+    &--type-message {
+      min-width: 300px;
+      max-width: 400px;
+    }
   }
 }
