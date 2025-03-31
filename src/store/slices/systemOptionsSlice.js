@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createSelector } from "@reduxjs/toolkit";
 
 // import constants
 import { LANGUAGE_EN } from "@constants";
@@ -34,8 +34,13 @@ export const systemOptionsSlice = createSlice({
 export const { setMusicVolume, setEffectsVolume } = systemOptionsSlice.actions;
 
 // export selectors
-export const selectEffectsVolume = (state) => state.systemOptions.effectsVolume;
-export const selectMusicVolume = (state) => state.systemOptions.musicVolume;
+const selectSystemOptions = (state) => state.systemOptions;
+
+export const selectEffectsVolume = createSelector(
+  [selectSystemOptions],
+  (systemOptions) => systemOptions.effectsVolume,
+);
+export const selectMusicVolume = createSelector([selectSystemOptions], (systemOptions) => systemOptions.musicVolume);
 
 // export reducer
 export default systemOptionsSlice.reducer;
