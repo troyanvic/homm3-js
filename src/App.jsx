@@ -1,7 +1,12 @@
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 // import styles
 import "@styles/global.scss";
+
+// import constants
+import { DIALOG_TYPE_MESSAGE } from "@constants";
 
 // import selectors
 import { selectIsShowingMainMenu } from "@slices/menuLayoutSlice.js";
@@ -9,6 +14,7 @@ import { selectIsShowingMainMenu } from "@slices/menuLayoutSlice.js";
 // import components
 import MainMenu from "@layout/MainMenu/MainMenu.jsx";
 import StartGame from "@components/StartGame/StartGame.jsx";
+import Dialog from "@common/Dialog/Dialog.jsx";
 
 /**
  * The main application component renders a dynamic layout based on the screen width.
@@ -18,20 +24,48 @@ import StartGame from "@components/StartGame/StartGame.jsx";
  *
  * @return {JSX.Element} The main application interface with a responsive design.
  */
-// TODO: connect the DialogButton to effectsVolume
-// TODO: add playing music
-// TODO: add favicon
-// TODO: add responsive message
+// TODO: add test for the Background music component
 function App() {
+  const { t } = useTranslation("dialogs");
+
+  // define a component state
+  const [isWindowWidth, setIsWindowWidth] = useState(window.innerWidth);
+
   // get Redux state
   const isShowingMainMenu = useSelector(selectIsShowingMainMenu);
 
-  return isShowingMainMenu ? (
-    <div className="main-container">
-      {window.innerWidth >= 768 ? <MainMenu /> : <div>no support small screen resolution message</div>}
-    </div>
+  useEffect(() => {
+    const handleResize = () => {
+      setIsWindowWidth(window.innerWidth);
+    };
+
+    // Add event listener on component mount
+    window.addEventListener("resize", handleResize);
+
+    // Cleanup the event listener on component unmount
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  return isWindowWidth >= 768 ? (
+    isShowingMainMenu ? (
+      <div className="main-container">
+        <MainMenu />
+      </div>
+    ) : (
+      <StartGame />
+    )
   ) : (
-    <StartGame />
+    <div className="main-container">
+      <Dialog
+        isOpen={true}
+        type={DIALOG_TYPE_MESSAGE}
+        message={t("app.screenSizeNotSupported")}
+        hasActions={false}
+        hasCancel={false}
+      />
+    </div>
   );
 }
 

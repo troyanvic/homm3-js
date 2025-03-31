@@ -22,6 +22,7 @@ i18n.use(initReactI18next).init({
     },
   },
   lng: LANGUAGE_EN,
+  //lng: "uk",
   fallbackLng: LANGUAGE_EN,
   interpolation: {
     escapeValue: false,

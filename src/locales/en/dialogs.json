@@ -1,4 +1,7 @@
 {
+  "app": {
+    "screenSizeNotSupported": "Screen Size Not Supported. We're sorry, but our application requires a screen width of at least 768 pixels to provide the best user experience. Please access our application from a tablet, laptop, or desktop computer for full functionality."
+  },
   "startGame": {
     "soundPrompt": "This game includes sound effects and audio that enhance your gaming experience. Would you like to enable sound?"
   }
