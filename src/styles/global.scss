@@ -26,9 +26,8 @@ body {
 .main-container {
   @include mx.full-flex-height-container;
   padding: 80px;
-  background-image: url("@images/brown-leather-bg.png");
+  background-image: url("@images/gray-leather-bg.jpg");
   @include mx.border(blue);
-  //border-image: url("@images/game-border.png") 48 fill / 48px / 0;
 }
 
 @media (max-height: 600px) {
