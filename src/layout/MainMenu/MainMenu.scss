@@ -1,4 +1,8 @@
 .main-menu-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 25px 50px;
   background-image: url("@assets/gifs/main.gif");
   background-size: contain;
   border-image: url("@images/golden-border.png") 4 fill / 4px / 4;

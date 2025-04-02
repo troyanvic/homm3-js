@@ -11,6 +11,7 @@ import mainTheme from "@sounds/main-theme.mp3";
 import { selectMusicVolume } from "@slices/systemOptionsSlice.js";
 
 // import components
+import MenuSidebar from "@components/MenuSidebar/MenuSidebar.jsx";
 import BackgroundMusic from "@components/BackgroundMusic/BackgroundMusic.jsx";
 
 /**
@@ -104,9 +105,12 @@ function MainMenu() {
   };
 
   return (
-    <div className="main-menu-container" style={containerStyles}>
+    <>
+      <section className="main-menu-container" style={containerStyles}>
+        <MenuSidebar />
+      </section>
       {musicVolume !== 0 && <BackgroundMusic src={mainTheme} />}
-    </div>
+    </>
   );
 }
 

@@ -1,0 +1,30 @@
+/* src/components/MenuSidebarItem/MenuSidebarItem.module.scss */
+
+@mixin menuItem($type, $lang) {
+  &--#{$type} {
+    background-image: url("@images/menu/#{$type}-#{$lang}-normal.png");
+
+    &:hover {
+      background-image: url("@images/menu/#{$type}-#{$lang}-hover.png");
+    }
+
+    &:active {
+      &:hover {
+        background-image: url("@images/menu/#{$type}-#{$lang}-down.png");
+      }
+    }
+  }
+}
+
+.menu-item {
+  display: block;
+  width: 220px;
+  height: 120px;
+  background-size: cover;
+
+  @include menuItem("new-game", "en");
+  @include menuItem("load-game", "en");
+  @include menuItem("scores", "en");
+  @include menuItem("credits", "en");
+  @include menuItem("quit", "en");
+}
