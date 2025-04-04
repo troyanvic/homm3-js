@@ -17,6 +17,7 @@ export default defineConfig({
       "@common": path.resolve(__dirname, "./src/common"),
       "@components": path.resolve(__dirname, "./src/components"),
       "@constants": path.resolve(__dirname, "./src/constants"),
+      "@hooks": path.resolve(__dirname, "./src/hooks"),
       "@i18n": path.resolve(__dirname, "./src/i18n"),
       "@layout": path.resolve(__dirname, "./src/layout"),
       "@locales": path.resolve(__dirname, "./src/locales"),
