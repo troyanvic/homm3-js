@@ -1,6 +1,11 @@
 import { useRef, useCallback } from "react";
 import { useSelector } from "react-redux";
+
+// import slices
 import { selectEffectsVolume } from "@slices/systemOptionsSlice.js";
+
+// import utils
+import { getAudio } from "@utils/audioCache";
 
 /**
  * Custom hook to play a sound effect with adjustable volume.
@@ -16,26 +21,26 @@ export function useSoundEffect(soundFile) {
   // Retrieve the current effects volume from the Redux store using a selector
   const effectsVolume = useSelector(selectEffectsVolume);
 
-  // Create a reference to an Audio object initialized with the provided sound file
-  const audioRef = useRef(new Audio(soundFile));
+  // Store a reference to the sound file path for later use
+  const soundFileRef = useRef(soundFile);
+
+  // Update the reference if the sound file changes
+  if (soundFileRef.current !== soundFile) {
+    soundFileRef.current = soundFile;
+  }
 
   // Function to play the sound effect
   const playSound = useCallback(() => {
-    const audio = audioRef.current; // Access the current Audio object from the reference
+    // Skip playing if the volume is 0 (muted)
+    if (effectsVolume === 0) return;
 
-    if (!audio) return; // Exit if the Audio object is not available
+    // Get the Audio object from the cache
+    const audio = getAudio(soundFileRef.current);
 
-    // Ensure the audio is preloaded and ready to play
-    audio.preload = "auto";
-
-    // Reset the audio position to the beginning
-    audio.currentTime = 0;
-
-    // Set the audio volume based on the Redux state
-    audio.volume = effectsVolume;
-
-    // Play the sound
-    audio.play();
+    audio.preload = "auto"; // Ensure the audio is preloaded and ready to play
+    audio.currentTime = 0; // Reset the audio position to the beginning
+    audio.volume = effectsVolume; // Set the audio volume based on the Redux state
+    audio.play(); // Play the sound
   }, [effectsVolume]);
 
   return { playSound };

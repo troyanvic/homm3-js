@@ -24,6 +24,7 @@ export default defineConfig({
       "@store": path.resolve(__dirname, "./src/store"),
       "@slices": path.resolve(__dirname, "./src/store/slices"),
       "@styles": path.resolve(__dirname, "./src/styles"),
+      "@utils": path.resolve(__dirname, "./src/utils"),
     },
   },
   css: {
