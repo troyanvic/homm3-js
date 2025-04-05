@@ -1,5 +1,18 @@
 /* src/components/MenuSidebarItem/MenuSidebarItem.module.scss */
 
+/**
+ * The `menuItem` mixin generates styles for a menu item's background image and hover state.
+ * Replaces the placeholder in the URL with the provided color to load the correct border image.
+ * This mixin dynamically sets the background image based on the type and language,
+ * and applies a hover effect to change the background image.
+ * Additionally, when the item is active and hovered, it applies a slight transform for a visual effect.
+ *
+ * Parameters:
+ * - $type: Specifies the type of menu item
+ *    - Available values: "new-game", "load-game", "load-game", "scores", "credits", "quit"
+ * - $lang: Specifies the language for the background image
+ *    - Available values: "en", "uk"
+ */
 @mixin menuItem($type, $lang) {
   &--#{$type} {
     background-image: url("@images/menu/#{$type}-#{$lang}-normal.png");
@@ -10,7 +23,7 @@
 
     &:active {
       &:hover {
-        background-image: url("@images/menu/#{$type}-#{$lang}-down.png");
+        transform: translate(3px, 5px);
       }
     }
   }
