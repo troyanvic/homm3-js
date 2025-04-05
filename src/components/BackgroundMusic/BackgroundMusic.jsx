@@ -34,6 +34,9 @@ const BackgroundMusic = memo(function Music({ src = mainTheme }) {
   const audioRef = useRef(null);
 
   useEffect(() => {
+    // Skip playing if the volume is 0 (muted)
+    if (musicVolume === 0) return;
+
     const audio = audioRef.current;
 
     if (!audio) return;
@@ -41,11 +44,8 @@ const BackgroundMusic = memo(function Music({ src = mainTheme }) {
     // Flag to track whether the component is still mounted
     let isMounted = true;
 
-    // Preload the audio for faster playback
-    audio.preload = "auto";
-
-    // Reset the audio's current time to the beginning
-    audio.currentTime = 0;
+    audio.preload = "auto"; // Preload the audio for faster playback
+    audio.currentTime = 0; // Reset the audio's current time to the beginning
 
     if (isMounted) {
       // Attempt to play the audio when the component is mounted
