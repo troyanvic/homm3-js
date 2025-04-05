@@ -1,3 +1,5 @@
+import { useCallback } from "react";
+
 // import sound effects
 import buttonClickSound from "@sounds/button-click.ogg";
 
@@ -23,10 +25,10 @@ export function useClickWithSound(onClick, delayMs = 75, state) {
   const handleDelayedClick = useDelayedClick(onClick, delayMs, state);
 
   // Plays a button click sound effect if the element is not in a disabled state.
-  const handleMouseDown = () => {
+  const handleMouseDown = useCallback(() => {
     if (state === STATE_DISABLED) return;
     playSound();
-  };
+  }, [state, playSound]);
 
   return {
     handleMouseDown,

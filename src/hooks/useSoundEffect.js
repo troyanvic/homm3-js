@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useCallback } from "react";
 import { useSelector } from "react-redux";
 import { selectEffectsVolume } from "@slices/systemOptionsSlice.js";
 
@@ -20,7 +20,7 @@ export function useSoundEffect(soundFile) {
   const audioRef = useRef(new Audio(soundFile));
 
   // Function to play the sound effect
-  const playSound = () => {
+  const playSound = useCallback(() => {
     const audio = audioRef.current; // Access the current Audio object from the reference
 
     if (!audio) return; // Exit if the Audio object is not available
@@ -36,7 +36,7 @@ export function useSoundEffect(soundFile) {
 
     // Play the sound
     audio.play();
-  };
+  }, [effectsVolume]);
 
   return { playSound };
 }

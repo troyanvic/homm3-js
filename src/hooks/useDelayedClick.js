@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useCallback } from "react";
 import { STATE_DISABLED } from "@constants";
 
 /**
@@ -14,16 +14,19 @@ import { STATE_DISABLED } from "@constants";
 export function useDelayedClick(onClick, delay = 75, disabledState = null) {
   const timeoutRef = useRef(null);
 
-  return (e) => {
-    // If a disabled state is provided and matches the current state, return early
-    if (disabledState === STATE_DISABLED) return;
+  return useCallback(
+    (e) => {
+      // If a disabled state is provided and matches the current state, return early
+      if (disabledState === STATE_DISABLED) return;
 
-    // Clear any existing timeout
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-    }
+      // Clear any existing timeout
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
 
-    // Execute the onClick callback after delay if provided
-    timeoutRef.current = setTimeout(() => onClick && onClick(e), delay);
-  };
+      // Execute the onClick callback after delay if provided
+      timeoutRef.current = setTimeout(() => onClick && onClick(e), delay);
+    },
+    [onClick, delay, disabledState],
+  );
 }
