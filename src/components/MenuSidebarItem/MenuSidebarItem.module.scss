@@ -31,8 +31,9 @@
 
 .menu-item {
   display: block;
-  width: 220px;
-  height: 120px;
+  width: 100%;
+  height: 20%;
+  background-position: center;
   background-size: cover;
 
   @include menuItem("new-game", "en");

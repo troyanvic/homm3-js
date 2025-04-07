@@ -40,3 +40,9 @@ body {
     align-items: flex-start;
   }
 }
+
+@media (max-width: 767px) {
+  #root {
+    height: 100%;
+  }
+}
