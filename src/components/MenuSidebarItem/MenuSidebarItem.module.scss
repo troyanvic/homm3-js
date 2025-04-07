@@ -36,6 +36,11 @@
   background-position: center;
   background-size: cover;
 
+  &--disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
   @include menuItem("new-game", "en");
   @include menuItem("load-game", "en");
   @include menuItem("scores", "en");

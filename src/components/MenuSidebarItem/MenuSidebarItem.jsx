@@ -4,7 +4,7 @@ import { memo } from "react";
 import styles from "./MenuSidebarItem.module.scss";
 
 // import constants
-import { STATE_ACTIVE } from "@constants";
+import { STATE_ACTIVE, STATE_DISABLED } from "@constants";
 
 // import hooks
 import { useClickWithSound } from "@hooks/useClickWithSound.js";
@@ -17,15 +17,18 @@ import { useClickWithSound } from "@hooks/useClickWithSound.js";
  * - `state` (string, optional): The current state of the menu item. Defaults to `STATE_ACTIVE`.
  * - `onClick` (function): A callback function triggered when the menu item is clicked.
  */
-
 const MenuSidebarItem = memo(function MenuSidebarItem({ type, state = STATE_ACTIVE, onClick }) {
   const { handleMouseDown, handleClick } = useClickWithSound(onClick, 75, state);
 
+  // Check if the state is disabled and add a class name for the disabled state if true
+  const disabledClass = state === STATE_DISABLED ? styles[`menu-item--${STATE_DISABLED}`] : "";
+  const disabledAttrs = state === STATE_DISABLED ? { "aria-disabled": true, tabIndex: -1 } : {};
+
   // Construct the button's CSS class name based on type and state props
-  const className = `${styles.menuItem} ${styles[`menu-item--${type}`]}`;
+  const className = `${styles.menuItem} ${styles[`menu-item--${type}`]} ${disabledClass}`;
 
   // Render the div element
-  return <div className={className} onMouseDown={handleMouseDown} onClick={handleClick} />;
+  return <div className={className} onMouseDown={handleMouseDown} onClick={handleClick} {...disabledAttrs} />;
 });
 
 export default MenuSidebarItem;

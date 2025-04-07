@@ -11,6 +11,8 @@ import {
   MENU_TYPE_SCORES,
   MENU_TYPE_CREDITS,
   MENU_TYPE_QUIT,
+  STATE_ACTIVE,
+  STATE_DISABLED,
 } from "@constants";
 
 // import components
@@ -20,16 +22,21 @@ function MenuSidebar() {
   const [menuType, setMenuType] = useState(MENU_TYPE_MAIN);
 
   const mainMenuItems = [
-    { type: MENU_TYPE_NEW_GAME },
-    { type: MENU_TYPE_LOAD_GAME },
-    { type: MENU_TYPE_SCORES },
-    { type: MENU_TYPE_CREDITS },
+    { type: MENU_TYPE_NEW_GAME, state: STATE_DISABLED },
+    { type: MENU_TYPE_LOAD_GAME, state: STATE_DISABLED },
+    { type: MENU_TYPE_SCORES, state: STATE_DISABLED },
+    { type: MENU_TYPE_CREDITS, state: STATE_DISABLED },
     { type: MENU_TYPE_QUIT },
   ];
 
   return (
     <aside className={styles.menu}>
-      {menuType === MENU_TYPE_MAIN && mainMenuItems.map((item) => <MenuSidebarItem key={item.type} type={item.type} />)}
+      {menuType === MENU_TYPE_MAIN &&
+        mainMenuItems.map((item) => {
+          const { type, state } = item;
+
+          return <MenuSidebarItem key={type} type={type} state={state} onClick={() => console.log(type)} />;
+        })}
     </aside>
   );
 }
