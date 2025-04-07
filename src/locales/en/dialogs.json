@@ -4,5 +4,8 @@
   },
   "startGame": {
     "soundPrompt": "This game includes sound effects and audio that enhance your gaming experience. Would you like to enable sound?"
+  },
+  "menu": {
+    "quit": "Are you sure you want to quit?"
   }
 }
