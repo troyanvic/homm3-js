@@ -1,5 +1,6 @@
 // States
 export const STATE_ACTIVE = "active";
+export const STATE_PRESSED = "pressed";
 export const STATE_DISABLED = "disabled";
 
 // Languages

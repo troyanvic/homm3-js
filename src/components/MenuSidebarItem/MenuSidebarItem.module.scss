@@ -17,6 +17,7 @@
   &--#{$type} {
     background-image: url("@images/menu/#{$type}-#{$lang}-normal.png");
 
+    &--pressed,
     &:hover {
       background-image: url("@images/menu/#{$type}-#{$lang}-hover.png");
     }
