@@ -70,25 +70,28 @@ const Dialog = memo(function Dialog({
 
   return (
     isOpen && (
-      <div className={dialogClassNames}>
-        <p className={dialogTextClassNames}>{message}</p>
-        {hasActions && (
-          <div className={styles.dialogActions}>
-            <DialogButton
-              type={BUTTON_TYPE_OK}
-              state={isOkDisabled ? STATE_DISABLED : STATE_ACTIVE}
-              onClick={onConfirm}
-            />
-            {hasCancel && (
+      <>
+        <div className={dialogClassNames}>
+          <p className={dialogTextClassNames}>{message}</p>
+          {hasActions && (
+            <div className={styles.dialogActions}>
               <DialogButton
-                type={BUTTON_TYPE_CANCEL}
-                state={isCancelDisabled ? STATE_DISABLED : STATE_ACTIVE}
-                onClick={onCancel}
+                type={BUTTON_TYPE_OK}
+                state={isOkDisabled ? STATE_DISABLED : STATE_ACTIVE}
+                onClick={onConfirm}
               />
-            )}
-          </div>
-        )}
-      </div>
+              {hasCancel && (
+                <DialogButton
+                  type={BUTTON_TYPE_CANCEL}
+                  state={isCancelDisabled ? STATE_DISABLED : STATE_ACTIVE}
+                  onClick={onCancel}
+                />
+              )}
+            </div>
+          )}
+        </div>
+        <div className={styles.dialogOverlay} />
+      </>
     )
   );
 });
