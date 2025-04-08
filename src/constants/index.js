@@ -21,3 +21,7 @@ export const MENU_TYPE_LOAD_GAME = "load-game";
 export const MENU_TYPE_SCORES = "scores";
 export const MENU_TYPE_CREDITS = "credits";
 export const MENU_TYPE_QUIT = "quit";
+
+// Keyboard
+export const KEY_ENTER = "Enter";
+export const KEY_ESCAPE = "Escape";

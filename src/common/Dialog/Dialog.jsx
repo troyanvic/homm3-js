@@ -1,13 +1,14 @@
-import { memo } from "react";
+import { memo, useEffect } from "react";
 
 // import styles
 import styles from "./Dialog.module.scss";
 
 // import constants
-import { BUTTON_TYPE_OK, BUTTON_TYPE_CANCEL, STATE_ACTIVE, STATE_DISABLED } from "@constants";
+import { BUTTON_TYPE_OK, BUTTON_TYPE_CANCEL, STATE_ACTIVE, STATE_DISABLED, KEY_ENTER, KEY_ESCAPE } from "@constants";
 
 // import components
 import DialogButton from "@common/DialogButton/DialogButton.jsx";
+import { useClickWithSound } from "@hooks/useClickWithSound.js";
 
 /**
  * Dialog Component
@@ -65,9 +66,51 @@ const Dialog = memo(function Dialog({
   onConfirm,
   onCancel,
 }) {
+  const { handleMouseDown: playClickEffect } = useClickWithSound(() => {}, 75, STATE_ACTIVE);
+
+  // Add keyboard event handlers
+  useEffect(() => {
+    if (!isOpen) return;
+
+    /**
+     * Handles keyboard interactions when the dialog is open.
+     *
+     * - Pressing the "Escape" key triggers the `onCancel` callback if a cancel button is available
+     *   and not disabled.
+     * - Pressing the "Enter" key triggers the `onConfirm` callback if the confirm button is not disabled.
+     *
+     * @param {KeyboardEvent} event - The keyboard event object.
+     */
+    const handleKeyDown = (event) => {
+      const { key } = event;
+
+      // Handle ESC key for Cancel
+      if (key === KEY_ESCAPE && hasCancel && !isCancelDisabled && onCancel) {
+        playClickEffect();
+        onCancel();
+      }
+
+      // Handle Enter key for OK/Confirm
+      if (key === KEY_ENTER && !isOkDisabled && onConfirm) {
+        playClickEffect();
+        onConfirm();
+      }
+    };
+
+    // Add event listener when the dialog is open
+    document.addEventListener("keydown", handleKeyDown);
+
+    // Cleanup event listener when the component unmounts or dialog closes
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isOpen, hasCancel, isCancelDisabled, isOkDisabled, onCancel, onConfirm]);
+
+  // Construct class names
   const dialogClassNames = `${styles.dialog} ${styles[`dialog--type-${type}`]}`;
   const dialogTextClassNames = `${styles.dialogText} ${styles[`dialog-text--type-${type}`]}`;
 
+  // Render the Dialog component
   return (
     isOpen && (
       <>
