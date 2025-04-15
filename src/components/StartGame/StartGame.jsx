@@ -6,10 +6,10 @@ import { useTranslation } from "react-i18next";
 import "./StartGame.scss";
 
 // import constants
-import { DIALOG_TYPE_MESSAGE, BUTTON_TYPE_OK, BUTTON_TYPE_CANCEL } from "@constants";
+import { BUTTON_TYPE_CANCEL, BUTTON_TYPE_OK, DIALOG_TYPE_MESSAGE } from "@constants";
 
 // import actions
-import { setMusicVolume, setEffectsVolume } from "@slices/systemOptionsSlice.js";
+import { setEffectsVolume, setMusicVolume } from "@slices/systemOptionsSlice.js";
 import { showMainMenu } from "@slices/menuLayoutSlice.js";
 
 // import components
