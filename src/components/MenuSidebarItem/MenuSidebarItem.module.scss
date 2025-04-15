@@ -8,18 +8,15 @@
  * Additionally, when the item is active and hovered, it applies a slight transform for a visual effect.
  *
  * Parameters:
- * - $type: Specifies the type of menu item
- *    - Available values: "new-game", "load-game", "load-game", "scores", "credits", "quit"
- * - $lang: Specifies the language for the background image
- *    - Available values: "en", "uk"
+ * - $item: Specifies the name of menu item
  */
-@mixin menuItem($type, $lang) {
-  &--#{$type} {
-    background-image: url("@images/menu/#{$type}-#{$lang}-normal.png");
+@mixin menuItem($item) {
+  &--#{$item} {
+    background-image: url("@images/menu/#{$item}-normal.png");
 
     &--pressed,
     &:hover {
-      background-image: url("@images/menu/#{$type}-#{$lang}-hover.png");
+      background-image: url("@images/menu/#{$item}-hover.png");
     }
 
     &:active {
@@ -42,9 +39,15 @@
     pointer-events: none;
   }
 
-  @include menuItem("new-game", "en");
-  @include menuItem("load-game", "en");
-  @include menuItem("scores", "en");
-  @include menuItem("credits", "en");
-  @include menuItem("quit", "en");
+  @include menuItem("new-game-en");
+  @include menuItem("load-game-en");
+  @include menuItem("scores-en");
+  @include menuItem("credits-en");
+  @include menuItem("quit-en");
+
+  @include menuItem("new-game-uk");
+  @include menuItem("load-game-uk");
+  @include menuItem("scores-uk");
+  @include menuItem("credits-uk");
+  @include menuItem("quit-uk");
 }

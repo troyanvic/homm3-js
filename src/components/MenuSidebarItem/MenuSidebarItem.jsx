@@ -1,10 +1,14 @@
-import { memo, useState, useEffect } from "react";
+import { memo, useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 // import styles
 import styles from "./MenuSidebarItem.module.scss";
 
 // import constants
 import { MENU_TYPE_QUIT, STATE_ACTIVE, STATE_DISABLED, STATE_PRESSED } from "@constants";
+
+// import selectors
+import { selectLanguage } from "@slices/systemOptionsSlice.js";
 
 // import hooks
 import { useClickWithSound } from "@hooks/useClickWithSound.js";
@@ -18,8 +22,14 @@ import { useClickWithSound } from "@hooks/useClickWithSound.js";
  * - `onClick` (function): A callback function triggered when the menu item is clicked.
  */
 const MenuSidebarItem = memo(function MenuSidebarItem({ type, state = STATE_ACTIVE, onClick }) {
+  // Get the language from Redux state
+  const language = useSelector(selectLanguage);
+
+  // Define and manage states for tracking pressed state and quit event type
   const [isPressed, setIsPressed] = useState(false);
   const [quitEventType, setQuitEventType] = useState(null);
+
+  // Destructure functions from the custom hook for handling sound and click events
   const { handleMouseDown, handleClick } = useClickWithSound(onClick, 75, state);
 
   // Effect to reset the `isPressed` state if the menu type is `MENU_TYPE_QUIT`
@@ -79,7 +89,7 @@ const MenuSidebarItem = memo(function MenuSidebarItem({ type, state = STATE_ACTI
   // Construct the button's complete CSS class name by combining the base style,
   // the style for the specific type, the pressed state style (if applicable),
   // and the disabled state style (if applicable).
-  const className = `${styles.menuItem} ${styles[`menu-item--${type}`]} ${pressedClass} ${disabledClass}`;
+  const className = `${styles.menuItem} ${styles[`menu-item--${type}-${language}`]} ${pressedClass} ${disabledClass}`;
 
   // Render the div element
   return <div className={className} onMouseDown={handleMouseDown} onClick={handleClickAction} {...disabledAttrs} />;
