@@ -16,10 +16,11 @@ import {
   STATE_DISABLED,
   DIALOG_TYPE_MESSAGE,
   STATE_PRESSED,
+  KEY_ESCAPE,
 } from "@constants";
 
 // import hooks
-import { useEscapeKey } from "@hooks/useEscapeKey.js";
+import { useKeypress } from "@hooks/useKeypress.js";
 
 // import components
 import MenuSidebarItem from "@components/MenuSidebarItem/MenuSidebarItem.jsx";
@@ -106,7 +107,11 @@ function MenuSidebar() {
     window.close();
   };
 
-  useEscapeKey(
+  // Attach the `useKeypress` hook to listen for the "Escape" key press.
+  // - When "Escape" is pressed, the "Quit" menu item's state is set to pressed,
+  //   and the quit confirmation dialog is displayed.
+  useKeypress(
+    KEY_ESCAPE,
     () => {
       setMainMenuItems(
         mainMenuItems.map((item) => {

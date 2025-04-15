@@ -1,17 +1,17 @@
-import { memo, useEffect } from "react";
+import { memo } from "react";
 
 // import styles
 import styles from "./Dialog.module.scss";
 
 // import constants
-import { BUTTON_TYPE_OK, BUTTON_TYPE_CANCEL, STATE_ACTIVE, STATE_DISABLED, KEY_ENTER } from "@constants";
+import { BUTTON_TYPE_OK, BUTTON_TYPE_CANCEL, STATE_ACTIVE, STATE_DISABLED, KEY_ENTER, KEY_ESCAPE } from "@constants";
 
 // import hooks
-import { useEscapeKey } from "@hooks/useEscapeKey.js";
+import { useKeypress } from "@hooks/useKeypress.js";
+import { useClickWithSound } from "@hooks/useClickWithSound.js";
 
 // import components
 import DialogButton from "@common/DialogButton/DialogButton.jsx";
-import { useClickWithSound } from "@hooks/useClickWithSound.js";
 
 /**
  * Dialog Component
@@ -71,7 +71,9 @@ const Dialog = memo(function Dialog({
 }) {
   const { handleMouseDown: playClickEffect } = useClickWithSound(() => {}, 75, STATE_ACTIVE);
 
-  useEscapeKey(
+  // Attach keypress listeners for Escape key when the dialog is open
+  useKeypress(
+    KEY_ESCAPE,
     () => {
       playClickEffect();
       onCancel();
@@ -80,45 +82,16 @@ const Dialog = memo(function Dialog({
     10,
   );
 
-  /**
-   * Adds an event listener for keyboard interactions when the dialog is open, and removes it
-   * when the dialog is closed or the component is unmounted. This effect enables the user
-   * to trigger confirmation or cancellation actions using keyboard keys:
-   *
-   * - Pressing "Escape" triggers the `onCancel` callback if a cancel button is enabled and provided.
-   * - Pressing "Enter" triggers the `onConfirm` callback if the confirm button is enabled.
-   *
-   * Dependencies:
-   * - Reattaches the listener if any of `isOpen`, `hasCancel`, `isCancelDisabled`, `isOkDisabled`, `onCancel`, or `handleConfirm` change.
-   */
-  useEffect(() => {
-    if (!isOpen) return;
-
-    /**
-     * Handles keyboard interactions when the dialog is open.
-     *
-     * - Pressing the "Escape" key triggers the `onCancel` callback if a cancel button is available
-     *   and not disabled.
-     * - Pressing the "Enter" key triggers the `onConfirm` callback if the confirm button is not disabled.
-     *
-     * @param {KeyboardEvent} event - The keyboard event object.
-     */
-    const handleKeyDown = (event) => {
-      const { key } = event;
-
-      // Handle Enter key for OK/Confirm
-      if (key === KEY_ENTER && !isOkDisabled && onConfirm) {
-        playClickEffect();
-        onConfirm();
-      }
-    };
-
-    // Add event listener when the dialog is open
-    document.addEventListener("keydown", handleKeyDown);
-
-    // Cleanup event listener when the component unmounts or dialog closes
-    return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [isOpen, isOkDisabled]);
+  // Attach keypress listeners for Enter key  when the dialog is open
+  useKeypress(
+    KEY_ENTER,
+    () => {
+      playClickEffect();
+      onConfirm();
+    },
+    isOpen,
+    10,
+  );
 
   // Construct class names
   const dialogClassNames = `${styles.dialog} ${styles[`dialog--type-${type}`]}`;
