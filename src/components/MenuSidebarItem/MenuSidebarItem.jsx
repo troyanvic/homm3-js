@@ -19,6 +19,7 @@ import { useClickWithSound } from "@hooks/useClickWithSound.js";
  */
 const MenuSidebarItem = memo(function MenuSidebarItem({ type, state = STATE_ACTIVE, onClick }) {
   const [isPressed, setIsPressed] = useState(false);
+  const [quitEventType, setQuitEventType] = useState(null);
   const { handleMouseDown, handleClick } = useClickWithSound(onClick, 75, state);
 
   // Effect to reset the `isPressed` state if the menu type is `MENU_TYPE_QUIT`
@@ -28,8 +29,30 @@ const MenuSidebarItem = memo(function MenuSidebarItem({ type, state = STATE_ACTI
       if (state === STATE_ACTIVE) {
         setIsPressed(false);
       }
+
+      if (state === STATE_PRESSED) {
+        // If quitEventType is not set yet, it means this STATE_PRESSED
+        // was triggered externally (by a keypress, not a click)
+        if (!quitEventType) {
+          setQuitEventType("keypress");
+        }
+
+        setIsPressed(true);
+
+        // Only play sound if this was triggered by a keypress, not a click
+        if (quitEventType !== "click") {
+          handleMouseDown();
+        }
+      }
     }
-  }, [type, state]);
+  }, [type, state, quitEventType, handleMouseDown]);
+
+  // Reset quitEventType when returning to active state
+  useEffect(() => {
+    if (state === STATE_ACTIVE) {
+      setQuitEventType(null);
+    }
+  }, [state]);
 
   /**
    * Handles the click action for the menu item.
@@ -40,6 +63,7 @@ const MenuSidebarItem = memo(function MenuSidebarItem({ type, state = STATE_ACTI
   const handleClickAction = () => {
     if (type === MENU_TYPE_QUIT) {
       setIsPressed(true);
+      setQuitEventType("click");
     }
 
     handleClick();

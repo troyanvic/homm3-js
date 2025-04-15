@@ -4,7 +4,10 @@ import { memo, useEffect } from "react";
 import styles from "./Dialog.module.scss";
 
 // import constants
-import { BUTTON_TYPE_OK, BUTTON_TYPE_CANCEL, STATE_ACTIVE, STATE_DISABLED, KEY_ENTER, KEY_ESCAPE } from "@constants";
+import { BUTTON_TYPE_OK, BUTTON_TYPE_CANCEL, STATE_ACTIVE, STATE_DISABLED, KEY_ENTER } from "@constants";
+
+// import hooks
+import { useEscapeKey } from "@hooks/useEscapeKey.js";
 
 // import components
 import DialogButton from "@common/DialogButton/DialogButton.jsx";
@@ -68,7 +71,26 @@ const Dialog = memo(function Dialog({
 }) {
   const { handleMouseDown: playClickEffect } = useClickWithSound(() => {}, 75, STATE_ACTIVE);
 
-  // Add keyboard event handlers
+  useEscapeKey(
+    () => {
+      playClickEffect();
+      onCancel();
+    },
+    isOpen,
+    10,
+  );
+
+  /**
+   * Adds an event listener for keyboard interactions when the dialog is open, and removes it
+   * when the dialog is closed or the component is unmounted. This effect enables the user
+   * to trigger confirmation or cancellation actions using keyboard keys:
+   *
+   * - Pressing "Escape" triggers the `onCancel` callback if a cancel button is enabled and provided.
+   * - Pressing "Enter" triggers the `onConfirm` callback if the confirm button is enabled.
+   *
+   * Dependencies:
+   * - Reattaches the listener if any of `isOpen`, `hasCancel`, `isCancelDisabled`, `isOkDisabled`, `onCancel`, or `handleConfirm` change.
+   */
   useEffect(() => {
     if (!isOpen) return;
 
@@ -84,12 +106,6 @@ const Dialog = memo(function Dialog({
     const handleKeyDown = (event) => {
       const { key } = event;
 
-      // Handle ESC key for Cancel
-      if (key === KEY_ESCAPE && hasCancel && !isCancelDisabled && onCancel) {
-        playClickEffect();
-        onCancel();
-      }
-
       // Handle Enter key for OK/Confirm
       if (key === KEY_ENTER && !isOkDisabled && onConfirm) {
         playClickEffect();
@@ -101,10 +117,8 @@ const Dialog = memo(function Dialog({
     document.addEventListener("keydown", handleKeyDown);
 
     // Cleanup event listener when the component unmounts or dialog closes
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [isOpen, hasCancel, isCancelDisabled, isOkDisabled, onCancel, onConfirm]);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [isOpen, isOkDisabled]);
 
   // Construct class names
   const dialogClassNames = `${styles.dialog} ${styles[`dialog--type-${type}`]}`;

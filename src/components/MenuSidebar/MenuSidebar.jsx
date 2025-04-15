@@ -18,6 +18,9 @@ import {
   STATE_PRESSED,
 } from "@constants";
 
+// import hooks
+import { useEscapeKey } from "@hooks/useEscapeKey.js";
+
 // import components
 import MenuSidebarItem from "@components/MenuSidebarItem/MenuSidebarItem.jsx";
 import Dialog from "@common/Dialog/Dialog.jsx";
@@ -102,6 +105,24 @@ function MenuSidebar() {
     setIsShowingQuitDialog(false);
     window.close();
   };
+
+  useEscapeKey(
+    () => {
+      setMainMenuItems(
+        mainMenuItems.map((item) => {
+          if (item.type === MENU_TYPE_QUIT) {
+            return { ...item, state: STATE_PRESSED };
+          }
+
+          return item;
+        }),
+      );
+
+      setIsShowingQuitDialog(true);
+    },
+    true,
+    1,
+  );
 
   // Render the MenuSidebar component, including menu items and the quit confirmation dialog
   return (
