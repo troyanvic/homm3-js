@@ -1,10 +1,8 @@
 import { createSelector, createSlice } from "@reduxjs/toolkit";
-
-// import constants
-import { LANGUAGE_EN } from "@constants";
+import { getCurrentLanguage } from "@i18n/languageService.js";
 
 const initialState = {
-  language: LANGUAGE_EN,
+  language: getCurrentLanguage(),
   heroSpeed: 2, // 1, 2, 3, 4
   enemySpeed: 2, // 1, 2, 3, 4
   mapScrollSpeed: 2, // 1, 2, 3
