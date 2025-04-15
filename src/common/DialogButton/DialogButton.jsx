@@ -4,7 +4,7 @@ import { memo } from "react";
 import styles from "./DialogButton.module.scss";
 
 // import constants
-import { BUTTON_TYPE_OK, STATE_ACTIVE, STATE_DISABLED } from "@constants";
+import { BUTTON_TYPE_OK, STATE_ACTIVE, STATE_DISABLED, STATE_PRESSED } from "@constants";
 
 // import hooks
 import { useClickWithSound } from "@hooks/useClickWithSound.js";
@@ -22,8 +22,11 @@ import { useClickWithSound } from "@hooks/useClickWithSound.js";
 const DialogButton = memo(function Button({ type = BUTTON_TYPE_OK, state = STATE_ACTIVE, onClick }) {
   const { handleMouseDown, handleClick } = useClickWithSound(onClick, 75, state);
 
+  // Determine the CSS class name for the pressed state based on the state
+  const pressedClass = state === STATE_PRESSED ? styles[`dialog-btn--${type}--pressed`] : "";
+
   // Construct the button's CSS class name based on type and state props
-  const className = `${styles.dialogBtn} ${styles[`dialog-btn--${type}--${state}`]}`;
+  const className = `${styles.dialogBtn} ${styles[`dialog-btn--${type}--${state}`]} ${pressedClass}`;
 
   // Render the button element
   return (

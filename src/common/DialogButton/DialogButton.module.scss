@@ -19,6 +19,10 @@
       }
     }
 
+    &--pressed {
+      background-image: url("@buttons/dialog-btn-#{$type}-clicked.png");
+    }
+
     &--disabled {
       background-image: url("@buttons/dialog-btn-#{$type}-disabled.png");
       pointer-events: none;

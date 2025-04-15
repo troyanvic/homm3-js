@@ -1,10 +1,18 @@
-import { memo } from "react";
+import { memo, useState } from "react";
 
 // import styles
 import styles from "./Dialog.module.scss";
 
 // import constants
-import { BUTTON_TYPE_OK, BUTTON_TYPE_CANCEL, STATE_ACTIVE, STATE_DISABLED, KEY_ENTER, KEY_ESCAPE } from "@constants";
+import {
+  BUTTON_TYPE_OK,
+  BUTTON_TYPE_CANCEL,
+  STATE_ACTIVE,
+  STATE_DISABLED,
+  KEY_ENTER,
+  KEY_ESCAPE,
+  STATE_PRESSED,
+} from "@constants";
 
 // import hooks
 import { useKeypress } from "@hooks/useKeypress.js";
@@ -70,28 +78,36 @@ const Dialog = memo(function Dialog({
   onCancel,
 }) {
   const { handleMouseDown: playClickEffect } = useClickWithSound(() => {}, 75, STATE_ACTIVE);
+  const [okButtonState, setOkButtonState] = useState(STATE_ACTIVE);
+  const [cancelButtonState, setCancelButtonState] = useState(STATE_ACTIVE);
+
+  /**
+   * Simulates a button press by playing a click effect, updating button state to "pressed",
+   * and triggering the provided callback after a delay.
+   *
+   * @param {Function} setButtonState - Function to update the button state.
+   * @param {Function} callback - Function to execute after the button press simulation.
+   * @param {number} releaseDelay - Time (in ms) after which the button state reverts to active. Default is 125ms.
+   * @param {number} actionDelay - Time (in ms) after which the callback is executed. Default is 175ms.
+   */
+  const simulateButtonPress = (setButtonState, callback, releaseDelay = 125, actionDelay = 175) => {
+    playClickEffect();
+    setButtonState(STATE_PRESSED);
+
+    setTimeout(() => {
+      setButtonState(STATE_ACTIVE);
+    }, releaseDelay);
+
+    setTimeout(() => {
+      callback();
+    }, actionDelay);
+  };
 
   // Attach keypress listeners for Escape key when the dialog is open
-  useKeypress(
-    KEY_ESCAPE,
-    () => {
-      playClickEffect();
-      onCancel();
-    },
-    isOpen,
-    10,
-  );
+  useKeypress(KEY_ESCAPE, () => simulateButtonPress(setCancelButtonState, onCancel), isOpen, 10);
 
   // Attach keypress listeners for Enter key  when the dialog is open
-  useKeypress(
-    KEY_ENTER,
-    () => {
-      playClickEffect();
-      onConfirm();
-    },
-    isOpen,
-    10,
-  );
+  useKeypress(KEY_ENTER, () => simulateButtonPress(setOkButtonState, onConfirm), isOpen, 10);
 
   // Construct class names
   const dialogClassNames = `${styles.dialog} ${styles[`dialog--type-${type}`]}`;
@@ -107,13 +123,13 @@ const Dialog = memo(function Dialog({
             <div className={styles.dialogActions}>
               <DialogButton
                 type={BUTTON_TYPE_OK}
-                state={isOkDisabled ? STATE_DISABLED : STATE_ACTIVE}
+                state={isOkDisabled ? STATE_DISABLED : okButtonState}
                 onClick={onConfirm}
               />
               {hasCancel && (
                 <DialogButton
                   type={BUTTON_TYPE_CANCEL}
-                  state={isCancelDisabled ? STATE_DISABLED : STATE_ACTIVE}
+                  state={isCancelDisabled ? STATE_DISABLED : cancelButtonState}
                   onClick={onCancel}
                 />
               )}
