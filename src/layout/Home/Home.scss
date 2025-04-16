@@ -1,9 +1,13 @@
 .home-container {
   display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  padding: 25px 50px;
-  background-image: url("@assets/gifs/main.gif");
-  background-size: contain;
+  background-color: #000;
   border-image: url("@images/golden-border.png") 4 fill / 4px / 4;
+
+  &--is-menu {
+    align-items: center;
+    justify-content: flex-end;
+    padding: 25px 50px;
+    background-image: url("@assets/gifs/main.gif");
+    background-size: contain;
+  }
 }

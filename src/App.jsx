@@ -9,11 +9,11 @@ import "@styles/global.scss";
 import { DIALOG_TYPE_MESSAGE } from "@constants";
 
 // import selectors
-import { selectIsShowingMainMenu } from "@slices/menuLayoutSlice.js";
+import { selectIsShowingHomeScreen } from "@slices/homeScreenSlice.js";
 
 // import components
-import Home from "@layout/Home/Home.jsx";
 import StartGame from "@components/StartGame/StartGame.jsx";
+import Home from "@layout/Home/Home.jsx";
 import Dialog from "@common/Dialog/Dialog.jsx";
 
 /**
@@ -31,27 +31,29 @@ function App() {
   const [isWindowWidth, setIsWindowWidth] = useState(window.innerWidth);
 
   // get Redux state
-  const isShowingMainMenu = useSelector(selectIsShowingMainMenu);
+  const isShowingHomeScreen = useSelector(selectIsShowingHomeScreen);
 
+  /**
+   * Effect hook that sets up a window resize event listener to update the window width state.
+   * The listener is added on component mount and cleaned up on unmount to prevent memory leaks.
+   */
   useEffect(() => {
     const handleResize = () => {
       setIsWindowWidth(window.innerWidth);
     };
 
-    // Add event listener on component mount
+    // Add an event listener on the component mount
     window.addEventListener("resize", handleResize);
 
-    // Cleanup the event listener on component unmount
+    // Clean up the event listener on the component unmount
     return () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
 
   return isWindowWidth >= 768 ? (
-    isShowingMainMenu ? (
-      <div className="main-container">
-        <Home />
-      </div>
+    isShowingHomeScreen ? (
+      <Home />
     ) : (
       <StartGame />
     )

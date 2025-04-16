@@ -10,7 +10,7 @@ import { BUTTON_TYPE_CANCEL, BUTTON_TYPE_OK, DIALOG_TYPE_MESSAGE } from "@consta
 
 // import actions
 import { setEffectsVolume, setMusicVolume } from "@slices/systemOptionsSlice.js";
-import { showMainMenu } from "@slices/menuLayoutSlice.js";
+import { showHomeScreen } from "@slices/homeScreenSlice.js";
 
 // import components
 import Dialog from "@common/Dialog/Dialog.jsx";
@@ -53,7 +53,7 @@ function StartGame() {
     setIsShowingDialog(false);
     dispatch(setMusicVolume(defaultVolume));
     dispatch(setEffectsVolume(defaultVolume));
-    dispatch(showMainMenu(true));
+    dispatch(showHomeScreen(true));
   };
 
   return (

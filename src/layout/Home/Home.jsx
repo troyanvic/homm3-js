@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 // import styles
 import "./Home.scss";
@@ -7,10 +7,12 @@ import "./Home.scss";
 // import music
 import mainTheme from "@sounds/main-theme.mp3";
 
-// import selectors
+// import selectors and actions
 import { selectMusicVolume } from "@slices/systemOptionsSlice.js";
+import { selectIsShowingMainMenu, showMainMenu } from "@slices/homeScreenSlice.js";
 
 // import components
+import InitialVideo from "@components/InitialVideo/InitialVideo.jsx";
 import MenuSidebar from "@components/MenuSidebar/MenuSidebar.jsx";
 import BackgroundMusic from "@components/BackgroundMusic/BackgroundMusic.jsx";
 
@@ -41,6 +43,18 @@ function Home() {
 
   // Get the global music volume from Redux state
   const musicVolume = useSelector(selectMusicVolume);
+  const isShowingMainMenu = useSelector(selectIsShowingMainMenu);
+  const dispatch = useDispatch();
+
+  /**
+   * Handles click events on the main container. If the main menu is not currently
+   * showing, it dispatches an action to display the main menu.
+   */
+  const handleClick = () => {
+    if (!isShowingMainMenu) {
+      dispatch(showMainMenu(true));
+    }
+  };
 
   /**
    * Dynamically calculates the menu's size based on the window's dimensions while keeping
@@ -85,6 +99,14 @@ function Home() {
     }));
   }, [baseWidth, baseHeight]);
 
+  /**
+   * Sets up the initial screen resolution and manages window resize events.
+   * This effect runs on component mount and whenever calculateResponsiveResolution changes.
+   * It handles:
+   * - Initial resolution calculation
+   * - Window resize event listener registration
+   * - Cleanup of event listeners on component unmount
+   */
   useEffect(() => {
     // Initialize the resolution when the component mounts
     calculateResponsiveResolution();
@@ -92,7 +114,7 @@ function Home() {
     // Listen for window resize events to adjust the resolution dynamically
     window.addEventListener("resize", calculateResponsiveResolution);
 
-    // Cleanup the event listener when the component unmounts
+    // Clean up the event listener when the component unmounts
     return () => {
       window.removeEventListener("resize", calculateResponsiveResolution);
     };
@@ -105,12 +127,21 @@ function Home() {
   };
 
   return (
-    <>
-      <section className="home-container" style={containerStyles}>
-        <MenuSidebar />
+    <main className="main-container" onClick={handleClick}>
+      <section
+        className={`home-container${isShowingMainMenu ? " home-container--is-menu" : ""}`}
+        style={containerStyles}
+      >
+        {isShowingMainMenu ? (
+          <>
+            <MenuSidebar />
+            {musicVolume !== 0 && <BackgroundMusic src={mainTheme} />}
+          </>
+        ) : (
+          <InitialVideo />
+        )}
       </section>
-      {musicVolume !== 0 && <BackgroundMusic src={mainTheme} />}
-    </>
+    </main>
   );
 }
 
