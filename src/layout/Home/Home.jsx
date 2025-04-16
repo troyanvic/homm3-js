@@ -1,8 +1,8 @@
-import { useState, useEffect, useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 // import styles
-import "./MainMenu.scss";
+import "./Home.scss";
 
 // import music
 import mainTheme from "@sounds/main-theme.mp3";
@@ -22,7 +22,7 @@ import BackgroundMusic from "@components/BackgroundMusic/BackgroundMusic.jsx";
  * This component uses hooks like `useState`, `useEffect`, and `useCallback` to manage state and
  * side effects effectively, ensuring performance and proper cleanup of event listeners.
  */
-function MainMenu() {
+function Home() {
   // Constants to define layout padding and resolution limits
   const SCREEN_PADDING = 80 * 2;
   const MIN_WIDTH = 800 - SCREEN_PADDING;
@@ -106,7 +106,7 @@ function MainMenu() {
 
   return (
     <>
-      <section className="main-menu-container" style={containerStyles}>
+      <section className="home-container" style={containerStyles}>
         <MenuSidebar />
       </section>
       {musicVolume !== 0 && <BackgroundMusic src={mainTheme} />}
@@ -114,4 +114,4 @@ function MainMenu() {
   );
 }
 
-export default MainMenu;
+export default Home;

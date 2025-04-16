@@ -12,7 +12,7 @@ import { DIALOG_TYPE_MESSAGE } from "@constants";
 import { selectIsShowingMainMenu } from "@slices/menuLayoutSlice.js";
 
 // import components
-import MainMenu from "@layout/MainMenu/MainMenu.jsx";
+import Home from "@layout/Home/Home.jsx";
 import StartGame from "@components/StartGame/StartGame.jsx";
 import Dialog from "@common/Dialog/Dialog.jsx";
 
@@ -24,7 +24,6 @@ import Dialog from "@common/Dialog/Dialog.jsx";
  *
  * @return {JSX.Element} The main application interface with a responsive design.
  */
-// TODO: add test for the Background music component
 function App() {
   const { t } = useTranslation("dialogs");
 
@@ -51,7 +50,7 @@ function App() {
   return isWindowWidth >= 768 ? (
     isShowingMainMenu ? (
       <div className="main-container">
-        <MainMenu />
+        <Home />
       </div>
     ) : (
       <StartGame />
