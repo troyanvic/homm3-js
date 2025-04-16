@@ -10,6 +10,12 @@ export default defineConfig({
     alias: {
       "@constants": "/src/constants/index.js",
       "@common": "/src/common",
+      "@sounds": "/src/assets/sounds",
+      "@slices": "/src/store/slices",
+      "@hooks": "/src/hooks",
+      "@utils": "/src/utils",
+      "@i18n": "/src/i18n",
+      "@locales": "/src/locales",
     },
   },
 });
