@@ -9,7 +9,7 @@ import mainTheme from "@sounds/main-theme.mp3";
 
 // import selectors and actions
 import { selectMusicVolume } from "@slices/systemOptionsSlice.js";
-import { selectIsShowingMainMenu, showMainMenu } from "@slices/homeScreenSlice.js";
+import { selectIsShowingCredits, selectIsShowingMainMenu, showCredits, showMainMenu } from "@slices/homeScreenSlice.js";
 
 // import components
 import InitialVideo from "@components/InitialVideo/InitialVideo.jsx";
@@ -44,6 +44,7 @@ function Home() {
   // Get the global state from Redux store
   const musicVolume = useSelector(selectMusicVolume);
   const isShowingMainMenu = useSelector(selectIsShowingMainMenu);
+  const isShowingCredits = useSelector(selectIsShowingCredits);
   const dispatch = useDispatch();
 
   /**
@@ -53,6 +54,10 @@ function Home() {
   const handleClick = () => {
     if (!isShowingMainMenu) {
       dispatch(showMainMenu(true));
+    }
+
+    if (isShowingCredits) {
+      dispatch(showCredits(false));
     }
   };
 

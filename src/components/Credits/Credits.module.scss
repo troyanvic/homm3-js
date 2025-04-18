@@ -1,0 +1,40 @@
+/* src/components/Credits/Credits.module.scss */
+
+.credits {
+}
+
+.credit {
+  &-section {
+    margin-bottom: 70px;
+    letter-spacing: 2px;
+    text-align: center;
+    text-shadow:
+      -1px -1px 1px #000,
+      1px -1px 1px #000,
+      -1px 1px 1px #000,
+      1px 1px 1px #000;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &-extra-title {
+    margin-bottom: 10px;
+    font-size: 30px;
+  }
+
+  &-title,
+  &-text {
+    font-size: 26px;
+  }
+
+  &-title {
+    margin-bottom: 5px;
+    color: #efba21;
+  }
+
+  &-text {
+    color: #ffe794;
+  }
+}

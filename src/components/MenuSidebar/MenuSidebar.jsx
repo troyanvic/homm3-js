@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 
 // import styles
@@ -9,6 +10,7 @@ import {
   DIALOG_TYPE_MESSAGE,
   KEY_ESCAPE,
   MENU_TYPE_BACK,
+  MENU_TYPE_CREDITS,
   MENU_TYPE_LOAD_GAME,
   MENU_TYPE_MAIN,
   MENU_TYPE_NEW_GAME,
@@ -20,9 +22,13 @@ import {
 // import hooks
 import { useKeypress } from "@hooks/useKeypress.js";
 
+// import selectors and actions
+import { selectIsShowingCredits, showCredits } from "@slices/homeScreenSlice.js";
+
 // import components
 import MenuSidebarItem from "@components/MenuSidebarItem/MenuSidebarItem.jsx";
 import MenuTitle from "@components/MenuTitle/MenuTitle.jsx";
+import Credits from "@components/Credits/Credits.jsx";
 import Dialog from "@common/Dialog/Dialog.jsx";
 
 // import menu items
@@ -37,9 +43,11 @@ import { loadGameMenuItems, mainMenuItems as initialMainMenuItems, newGameMenuIt
  * - Handles navigation actions by changing the `menuType` state.
  */
 function MenuSidebar() {
+  const dispatch = useDispatch();
   const [menuType, setMenuType] = useState(MENU_TYPE_MAIN);
   const [isShowingQuitDialog, setIsShowingQuitDialog] = useState(false);
   const [mainMenuItems, setMainMenuItems] = useState(initialMainMenuItems);
+  const isShowingCredits = useSelector(selectIsShowingCredits);
 
   // Initialize the `useTranslation` hook for accessing translations within the "dialogs" namespace
   const { t } = useTranslation("dialogs");
@@ -66,6 +74,11 @@ function MenuSidebar() {
     // Switch to load game menu items when "Load Game" is selected
     if (type === MENU_TYPE_LOAD_GAME) {
       setMainMenuItems(loadGameMenuItems);
+    }
+
+    // Show credits screen when "Credits" menu item is selected
+    if (type === MENU_TYPE_CREDITS) {
+      dispatch(showCredits(true));
     }
 
     // Return to main menu when "Back" is clicked
@@ -120,6 +133,13 @@ function MenuSidebar() {
     setIsShowingQuitDialog(false);
     window.close();
   };
+
+  // Reset menu type to main menu when credits screen is closed
+  useEffect(() => {
+    if (isShowingCredits === false) {
+      setMenuType(MENU_TYPE_MAIN);
+    }
+  }, [isShowingCredits]);
 
   // Attach the `useKeypress` hook to listen for the "Escape" key press.
   // - When "Escape" is pressed, the "Quit" menu item's state is set to pressed,
@@ -187,11 +207,15 @@ function MenuSidebar() {
     <>
       <MenuTitle type={menuType} />
       <aside className={styles.menu}>
-        {mainMenuItems.map((item) => {
-          const { type, state } = item;
+        {menuType === MENU_TYPE_MAIN || menuType === MENU_TYPE_NEW_GAME || menuType === MENU_TYPE_LOAD_GAME
+          ? mainMenuItems.map((item) => {
+              const { type, state } = item;
 
-          return <MenuSidebarItem key={type} type={type} state={state} onClick={() => handleClick(type)} />;
-        })}
+              return <MenuSidebarItem key={type} type={type} state={state} onClick={() => handleClick(type)} />;
+            })
+          : false}
+
+        {isShowingCredits && <Credits />}
 
         {isShowingQuitDialog && (
           <Dialog
