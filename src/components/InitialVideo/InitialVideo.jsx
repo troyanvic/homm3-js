@@ -16,13 +16,22 @@ import { showMainMenu } from "@slices/homeScreenSlice.js";
 
 export default function InitialVideo() {
   const [currentVideo, setCurrentVideo] = useState(video3DO);
+  const musicVolume = useSelector(selectMusicVolume);
   const videoRef = useRef(null);
   const dispatch = useDispatch();
 
-  // Get the global state from Redux store
-  const musicVolume = useSelector(selectMusicVolume);
-
+  /**
+   * Handles video transitions between 3DO and NWC logos.
+   * When the first video ends, it plays the second one.
+   * After both videos finish, it shows the main menu.
+   */
   useEffect(() => {
+    const { current } = videoRef;
+
+    /**
+     * Handles the video end event by either switching to the next video
+     * or showing the main menu when all videos are finished.
+     */
     const handleVideoEnded = () => {
       if (currentVideo === video3DO) {
         setCurrentVideo(videoNWC);
@@ -33,18 +42,33 @@ export default function InitialVideo() {
       }
     };
 
-    if (videoRef.current) {
-      videoRef.current.addEventListener("ended", handleVideoEnded);
+    // Set up the video end event listener and clean it up on unmount or when the video changes
+    if (current) {
+      current.addEventListener("ended", handleVideoEnded);
     }
 
     return () => {
-      if (videoRef.current) {
-        videoRef.current.removeEventListener("ended", handleVideoEnded);
+      if (current) {
+        current.removeEventListener("ended", handleVideoEnded);
       }
     };
   }, [currentVideo]);
 
-  // TODO: add keyboard handler to skip the video
+  /**
+   * Adds a keyboard event listener to allow skipping the intro videos.
+   * When any key is pressed, it immediately shows the main menu.
+   */
+  useEffect(() => {
+    const handleKeyPress = () => {
+      dispatch(showMainMenu(true));
+    };
+
+    window.addEventListener("keydown", handleKeyPress);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyPress);
+    };
+  }, [dispatch]);
 
   return (
     <div className={styles.initialVideoContainer}>
