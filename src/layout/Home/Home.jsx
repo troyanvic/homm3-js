@@ -41,7 +41,7 @@ function Home() {
 
   const { baseWidth, baseHeight, currentWidth, currentHeight } = menuScreenResolution;
 
-  // Get the global music volume from Redux state
+  // Get the global state from Redux store
   const musicVolume = useSelector(selectMusicVolume);
   const isShowingMainMenu = useSelector(selectIsShowingMainMenu);
   const dispatch = useDispatch();
