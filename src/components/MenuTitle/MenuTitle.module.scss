@@ -1,0 +1,31 @@
+/* src/components/MenuTitle/MenuTitle.module.scss */
+@use "@styles/_mixins.scss" as mx;
+
+@mixin menu-title-text($item) {
+  &--#{$item} {
+    background-image: url("@images/menu/#{$item}.png");
+  }
+}
+
+.menu-title {
+  &-container {
+    --width: 130px;
+
+    position: relative;
+    top: 25px;
+    width: calc(100% - var(--width));
+  }
+
+  &-text {
+    display: block;
+    width: 350px;
+    height: 70px;
+    margin: 0 auto;
+    background-size: contain;
+
+    @include menu-title-text("new-game-title-en");
+    @include menu-title-text("new-game-title-uk");
+  }
+}
+
+@include mx.menu-media-query(".menu-title-container");

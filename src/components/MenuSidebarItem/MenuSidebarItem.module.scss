@@ -44,10 +44,20 @@
   @include menuItem("scores-en");
   @include menuItem("credits-en");
   @include menuItem("quit-en");
+  @include menuItem("single-scenario-en");
+  @include menuItem("multi-player-en");
+  @include menuItem("campaign-en");
+  @include menuItem("tutorial-en");
+  @include menuItem("back-en");
 
   @include menuItem("new-game-uk");
   @include menuItem("load-game-uk");
   @include menuItem("scores-uk");
   @include menuItem("credits-uk");
   @include menuItem("quit-uk");
+  @include menuItem("single-scenario-uk");
+  @include menuItem("multi-player-uk");
+  @include menuItem("campaign-uk");
+  @include menuItem("tutorial-uk");
+  @include menuItem("back-uk");
 }

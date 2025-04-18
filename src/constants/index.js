@@ -20,7 +20,14 @@ export const MENU_TYPE_NEW_GAME = "new-game";
 export const MENU_TYPE_LOAD_GAME = "load-game";
 export const MENU_TYPE_SCORES = "scores";
 export const MENU_TYPE_CREDITS = "credits";
+export const MENU_TYPE_BACK = "back";
 export const MENU_TYPE_QUIT = "quit";
+
+// New game menu types
+export const MENU_TYPE_NEW_GAME_SINGLE_SCENARIO = "single-scenario";
+export const MENU_TYPE_NEW_GAME_MULTI_PLAYER = "multi-player";
+export const MENU_TYPE_NEW_GAME_CAMPAIGN = "campaign";
+export const MENU_TYPE_NEW_GAME_TUTORIAL = "tutorial";
 
 // Keyboard
 export const KEY_ENTER = "Enter";

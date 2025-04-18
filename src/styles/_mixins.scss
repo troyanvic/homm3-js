@@ -18,6 +18,40 @@
  * - blue
  * - red
  */
-@mixin border($color) {
+@mixin border($color: "blue") {
   border-image: url("@images/borders/border-#{$color}.png") 48 fill / 48px / 0;
+}
+
+/**
+ * Mixin to adjust menu width based on different viewport dimensions.
+ * Applies responsive width values through CSS custom properties (--width) 
+ * according to specific breakpoints for both width and height.
+ *
+ * Parameters:
+ * - $selector: Optional selector to target specific elements (defaults to empty string)
+ */
+@mixin menu-media-query($selector: "") {
+  @media (min-width: 850px) and (min-height: 660px) {
+    #{$selector} {
+      --width: 170px;
+    }
+  }
+
+  @media (min-width: 950px) and (min-height: 750px) {
+    #{$selector} {
+      --width: 200px;
+    }
+  }
+
+  @media (min-width: 1100px) and (min-height: 860px) {
+    #{$selector} {
+      --width: 250px;
+    }
+  }
+
+  @media (min-width: 1340px) and (min-height: 1040px) {
+    #{$selector} {
+      --width: 280px;
+    }
+  }
 }
