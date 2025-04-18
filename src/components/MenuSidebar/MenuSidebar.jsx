@@ -9,6 +9,7 @@ import {
   DIALOG_TYPE_MESSAGE,
   KEY_ESCAPE,
   MENU_TYPE_BACK,
+  MENU_TYPE_LOAD_GAME,
   MENU_TYPE_MAIN,
   MENU_TYPE_NEW_GAME,
   MENU_TYPE_QUIT,
@@ -25,7 +26,7 @@ import MenuTitle from "@components/MenuTitle/MenuTitle.jsx";
 import Dialog from "@common/Dialog/Dialog.jsx";
 
 // import menu items
-import { mainMenuItems as initialMainMenuItems, newGameMenuItems } from "./menuItems.js";
+import { loadGameMenuItems, mainMenuItems as initialMainMenuItems, newGameMenuItems } from "./menuItems.js";
 
 /**
  * The `MenuSidebar` component renders a menu sidebar that allows users to navigate between different menu items.
@@ -57,10 +58,17 @@ function MenuSidebar() {
     // Update a menu type to navigate to the selected menu section, unless "Quit" is clicked
     if (type !== MENU_TYPE_QUIT) setMenuType(type);
 
+    // Switch to new game menu items when "New Game" is selected
     if (type === MENU_TYPE_NEW_GAME) {
       setMainMenuItems(newGameMenuItems);
     }
 
+    // Switch to load game menu items when "Load Game" is selected
+    if (type === MENU_TYPE_LOAD_GAME) {
+      setMainMenuItems(loadGameMenuItems);
+    }
+
+    // Return to main menu when "Back" is clicked
     if (type === MENU_TYPE_BACK) {
       setMainMenuItems(initialMainMenuItems);
       setMenuType(MENU_TYPE_MAIN);
@@ -119,6 +127,7 @@ function MenuSidebar() {
   useKeypress(
     KEY_ESCAPE,
     () => {
+      // In main menu, show quit dialog and set "Quit" item state to pressed
       if (menuType === MENU_TYPE_MAIN) {
         setMainMenuItems(
           mainMenuItems.map((item) => {
@@ -133,9 +142,28 @@ function MenuSidebar() {
         setIsShowingQuitDialog(true);
       }
 
+      // In the new game menu, set the "Back" item state to pressed and return to the main menu
       if (menuType === MENU_TYPE_NEW_GAME) {
         setMainMenuItems(
           newGameMenuItems.map((item) => {
+            if (item.type === MENU_TYPE_BACK) {
+              return { ...item, state: STATE_PRESSED };
+            }
+
+            return item;
+          }),
+        );
+
+        setTimeout(() => {
+          setMainMenuItems(initialMainMenuItems);
+          setMenuType(MENU_TYPE_MAIN);
+        }, 100);
+      }
+
+      // In the load game menu, set the "Back" item state to pressed and return to the main menu
+      if (menuType === MENU_TYPE_LOAD_GAME) {
+        setMainMenuItems(
+          loadGameMenuItems.map((item) => {
             if (item.type === MENU_TYPE_BACK) {
               return { ...item, state: STATE_PRESSED };
             }

@@ -24,7 +24,10 @@
     background-size: contain;
 
     @include menu-title-text("new-game-title-en");
+    @include menu-title-text("load-game-title-en");
+
     @include menu-title-text("new-game-title-uk");
+    @include menu-title-text("load-game-title-uk");
   }
 }
 
