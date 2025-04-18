@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 // import styles
 import styles from "./InitialVideo.module.scss";
@@ -8,12 +8,16 @@ import styles from "./InitialVideo.module.scss";
 import video3DO from "@videos/3DO-logo.webm";
 import videoNWC from "@videos/NWC-logo.webm";
 
-// import selectors and actions
+// import selectors
 import { selectMusicVolume } from "@slices/systemOptionsSlice.js";
+
+// import actions
+import { showMainMenu } from "@slices/homeScreenSlice.js";
 
 export default function InitialVideo() {
   const [currentVideo, setCurrentVideo] = useState(video3DO);
   const videoRef = useRef(null);
+  const dispatch = useDispatch();
 
   // Get the global state from Redux store
   const musicVolume = useSelector(selectMusicVolume);
@@ -24,7 +28,9 @@ export default function InitialVideo() {
         setCurrentVideo(videoNWC);
       }
 
-      // TODO: add changing the layout to Main menu when 2nd video ends
+      if (currentVideo === videoNWC) {
+        dispatch(showMainMenu(true));
+      }
     };
 
     if (videoRef.current) {
