@@ -1,6 +1,26 @@
 /* src/components/Credits/Credits.module.scss */
 
 .credits {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+
+  &-list {
+    position: absolute;
+    top: 100%;
+  }
+
+  &-copyright-text {
+    position: absolute;
+    right: 40px;
+    bottom: 25px;
+    width: 390px;
+    font-size: 14px;
+    font-weight: 400;
+    text-shadow: 1px 1px 1px #000;
+    color: #20c81c;
+  }
 }
 
 .credit {
@@ -21,7 +41,7 @@
 
   &-extra-title {
     margin-bottom: 10px;
-    font-size: 30px;
+    font-size: 22px;
   }
 
   &-title,
@@ -35,6 +55,8 @@
   }
 
   &-text {
+    display: flex;
+    flex-direction: column;
     color: #ffe794;
   }
 }

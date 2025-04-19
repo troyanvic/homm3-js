@@ -1,5 +1,6 @@
 .home-container {
   display: flex;
+  position: relative;
   padding: 3px;
   background-color: #000;
   border-image: url("@images/golden-border.png") 4 fill / 4px / 4;

@@ -1,0 +1,105 @@
+{
+  "copyright": "Copyright 2000 The 3DO Company. All Rights Reserved. 3DO, Heroes, Heroes of Might and Magic, Armageddon's Blade, Shadow of Death, New World Computing, and their respective logos, are trademarks andor service marks of The 3DO Company in the U.S. and other countries: All other trademarks belong to their respective owners.",
+  "creditsList": {
+    "js" : {
+      "extraTitle": "JavaScript version credits",
+      "title": "Programmer:",
+      "name": "Viktor Troian"
+    },
+    "original": {
+      "extraTitle": "Original game credits"
+    },
+    "createdBy": {
+      "title": "Created By:",
+      "name": "Jon Van Caneghem"
+    },
+    "executiveProducer": {
+      "title": "Executive Producer:",
+      "name": "Mark Caldwell"
+    },
+    "producer": {
+      "title": "Producer:",
+      "name": "Jeffrey W. Blattner"
+    },
+    "director": {
+      "title": "Director:",
+      "name": "David Mullich"
+    },
+    "designers": {
+      "title": "Designers:",
+      "name": "Jennifer Bullard, Jon Van Caneghem"
+    },
+    "leadProgrammers": {
+      "title": "Lead Programmers:",
+      "name": "John Bolton (ROE), David Richey (SOD), Gus Smedstad (AB)"
+    },
+    "programmers": {
+      "title": "Programmers:",
+      "name": "Mark Caldwell, John Krause, Jeffrey Leggett"
+    },
+    "installerProgrammer": {
+      "title": "Installer Programmer:",
+      "name": "Richard Corredera"
+    },
+    "leadArtists": {
+      "title": "Lead Artists:",
+      "name": "Bonita Long-Hemsath (ROE), Joseph McGuffin (SOD), Phelan Sykes (AB)"
+    },
+    "artists": {
+      "title": "Artists:",
+      "name": "George Almond, Jeff Bigman, Fernando Castillo, Rebecca Riel, Brian DeMetz, John E. Gibson IV, Louis Henderson, Edward Hudson, Tracy Iwata, Steve Jasper, Brian Scott Kemper, April Lee, Adam McCarthy, Kurt McKeever, Nowa Morisaku, Eric Newman, John Slowsky, William Stoneham, Kenneth Thomson Jr., Julia Ulano, Steve Wasaff, Scott White, Charles Zilm"
+    },
+    "assettCoordinator": {
+      "title": "Assett Coordinator:",
+      "name": "Jack Russell"
+    },
+    "levelDesigners": {
+      "title": "Level Designers:",
+      "name": "Benjamin Bent, David Botan, Ryan Den, Marcus Pregent, Terry Ray, Christian Vanover, Lisa Farina, Michael Wolf"
+    },
+    "musicProducer": {
+      "title": "Music Producer:",
+      "name": "Robert King"
+    },
+    "townThemes": {
+      "title": "Town Themes:",
+      "name": "Paul Romero"
+    },
+    "music": {
+      "title": "Music:",
+      "name": "Paul Romero, Robert King, Steve Baca"
+    },
+    "soundDesign": {
+      "title": "Sound Design:",
+      "name": "Robert King, Steve Baca, Chuck Russom"
+    },
+    "voiceProduction": {
+      "title": "Voice Production:",
+      "name": "Robert King, Green Street Studios"
+    },
+    "voiceTalent": {
+      "title": "Voice Talent:",
+      "name": "Mark Arnott, Mari Devon, Aric Devone, Danny Fehsenfield, Lex Lang, Wendee Lee, Mona Marshall, Laird Macintosh"
+    },
+    "leadTester": {
+      "title": "Lead Tester:",
+      "name": "Karl Drown"
+    },
+    "seniorTester": {
+      "title": "Senior Tester:",
+      "name": "Ernie Gallardo"
+    },
+    "testers": {
+      "title": "Testers:",
+      "name": "Jeffrey Abney, Edward Campos, Michael Dallenbach, Robert Scarpato, Clifton Webster, Eric Williamson"
+    },
+    "specialThanks": {
+      "title": "Special Thanks:",
+      "name": "Rad Game Tools, Sonic Foundry, Sound Forge, Soundscape"
+    },
+    "visitWeb": {
+      "title": "Visit us on the Web:",
+      "name": "www.3do.com"
+    }
+  }
+}
