@@ -39,25 +39,53 @@
     pointer-events: none;
   }
 
+  // main menu items
   @include menuItem("new-game-en");
   @include menuItem("load-game-en");
   @include menuItem("scores-en");
   @include menuItem("credits-en");
   @include menuItem("quit-en");
-  @include menuItem("single-scenario-en");
-  @include menuItem("multi-player-en");
-  @include menuItem("campaign-en");
-  @include menuItem("tutorial-en");
-  @include menuItem("back-en");
 
   @include menuItem("new-game-uk");
   @include menuItem("load-game-uk");
   @include menuItem("scores-uk");
   @include menuItem("credits-uk");
   @include menuItem("quit-uk");
-  @include menuItem("single-scenario-uk");
-  @include menuItem("multi-player-uk");
-  @include menuItem("campaign-uk");
-  @include menuItem("tutorial-uk");
+
+  // new game menu items
+  @include menuItem("new-game-single-scenario-en");
+  @include menuItem("new-game-multi-player-en");
+  @include menuItem("new-game-campaign-en");
+  @include menuItem("new-game-tutorial-en");
+
+  @include menuItem("new-game-single-scenario-uk");
+  @include menuItem("new-game-multi-player-uk");
+  @include menuItem("new-game-campaign-uk");
+  @include menuItem("new-game-tutorial-uk");
+
+  // load game menu items
+  @include menuItem("load-game-single-scenario-en");
+  @include menuItem("load-game-multi-player-en");
+  @include menuItem("load-game-campaign-en");
+  @include menuItem("load-game-tutorial-en");
+
+  @include menuItem("load-game-single-scenario-uk");
+  @include menuItem("load-game-multi-player-uk");
+  @include menuItem("load-game-campaign-uk");
+  @include menuItem("load-game-tutorial-uk");
+
+  // campaign menu items
+  @include menuItem("sod-en");
+  @include menuItem("roe-en");
+  @include menuItem("ab-en");
+  @include menuItem("custom-en");
+
+  @include menuItem("sod-uk");
+  @include menuItem("roe-uk");
+  @include menuItem("ab-uk");
+  @include menuItem("custom-uk");
+
+  // back button
+  @include menuItem("back-en");
   @include menuItem("back-uk");
 }

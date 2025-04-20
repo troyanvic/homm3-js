@@ -23,8 +23,8 @@ i18n.use(initReactI18next).init({
       credits: ukCredits,
     },
   },
-  //lng: LANGUAGE_EN,
-  lng: "uk",
+  lng: LANGUAGE_EN,
+  //lng: "uk",
   fallbackLng: LANGUAGE_EN,
   interpolation: {
     escapeValue: false,

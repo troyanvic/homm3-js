@@ -22,10 +22,21 @@ export const MENU_TYPE_SCORES = "scores";
 export const MENU_TYPE_CREDITS = "credits";
 export const MENU_TYPE_BACK = "back";
 export const MENU_TYPE_QUIT = "quit";
-export const MENU_TYPE_SINGLE_SCENARIO = "single-scenario";
-export const MENU_TYPE_MULTI_PLAYER = "multi-player";
-export const MENU_TYPE_CAMPAIGN = "campaign";
-export const MENU_TYPE_TUTORIAL = "tutorial";
+
+export const MENU_TYPE_NEW_GAME_SINGLE_SCENARIO = "new-game-single-scenario";
+export const MENU_TYPE_NEW_GAME_MULTI_PLAYER = "new-game-multi-player";
+export const MENU_TYPE_NEW_GAME_CAMPAIGN = "new-game-campaign";
+export const MENU_TYPE_NEW_GAME_TUTORIAL = "new-game-tutorial";
+
+export const MENU_TYPE_LOAD_GAME_SINGLE_SCENARIO = "load-game-single-scenario";
+export const MENU_TYPE_LOAD_GAME_MULTI_PLAYER = "load-game-multi-player";
+export const MENU_TYPE_LOAD_GAME_CAMPAIGN = "load-game-campaign";
+export const MENU_TYPE_LOAD_GAME_TUTORIAL = "load-game-tutorial";
+
+export const MENU_TYPE_SOD = "sod";
+export const MENU_TYPE_ROE = "roe";
+export const MENU_TYPE_AB = "ab";
+export const MENU_TYPE_CUSTOM = "custom";
 
 // Keyboard
 export const KEY_ENTER = "Enter";

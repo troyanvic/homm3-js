@@ -14,6 +14,7 @@ import {
   MENU_TYPE_LOAD_GAME,
   MENU_TYPE_MAIN,
   MENU_TYPE_NEW_GAME,
+  MENU_TYPE_NEW_GAME_CAMPAIGN,
   MENU_TYPE_QUIT,
   STATE_ACTIVE,
   STATE_PRESSED,
@@ -32,7 +33,12 @@ import Credits from "@components/Credits/Credits.jsx";
 import Dialog from "@common/Dialog/Dialog.jsx";
 
 // import menu items
-import { loadGameMenuItems, mainMenuItems as initialMainMenuItems, newGameMenuItems } from "./menuItems.js";
+import {
+  campaignMenuItems,
+  loadGameMenuItems,
+  mainMenuItems as initialMainMenuItems,
+  newGameMenuItems,
+} from "./menuItems.js";
 
 /**
  * The `MenuSidebar` component renders a menu sidebar that allows users to navigate between different menu items.
@@ -81,10 +87,22 @@ function MenuSidebar() {
       dispatch(showCredits(true));
     }
 
-    // Return to main menu when "Back" is clicked
+    // Switch to campaign menu items when "Campaign" is selected
+    if (type === MENU_TYPE_NEW_GAME_CAMPAIGN) {
+      setMainMenuItems(campaignMenuItems);
+    }
+
+    // Return to prev menu when "Back" is clicked
     if (type === MENU_TYPE_BACK) {
-      setMainMenuItems(initialMainMenuItems);
-      setMenuType(MENU_TYPE_MAIN);
+      if (menuType === MENU_TYPE_NEW_GAME || menuType === MENU_TYPE_LOAD_GAME) {
+        setMainMenuItems(initialMainMenuItems);
+        setMenuType(MENU_TYPE_MAIN);
+      }
+
+      if (menuType === MENU_TYPE_NEW_GAME_CAMPAIGN) {
+        setMainMenuItems(newGameMenuItems);
+        setMenuType(MENU_TYPE_NEW_GAME);
+      }
     }
 
     // Change the "Quit" menu item state to pressed
@@ -197,6 +215,24 @@ function MenuSidebar() {
           setMenuType(MENU_TYPE_MAIN);
         }, 100);
       }
+
+      // In the campaign menu, set the "Back" item state to pressed and return to the new game menu
+      if (menuType === MENU_TYPE_NEW_GAME_CAMPAIGN) {
+        setMainMenuItems(
+          campaignMenuItems.map((item) => {
+            if (item.type === MENU_TYPE_BACK) {
+              return { ...item, state: STATE_PRESSED };
+            }
+
+            return item;
+          }),
+        );
+
+        setTimeout(() => {
+          setMainMenuItems(newGameMenuItems);
+          setMenuType(MENU_TYPE_NEW_GAME);
+        }, 100);
+      }
     },
     true,
     1,
@@ -207,7 +243,10 @@ function MenuSidebar() {
     <>
       <MenuTitle type={menuType} />
       <aside className={styles.menu}>
-        {menuType === MENU_TYPE_MAIN || menuType === MENU_TYPE_NEW_GAME || menuType === MENU_TYPE_LOAD_GAME
+        {menuType === MENU_TYPE_MAIN ||
+        menuType === MENU_TYPE_NEW_GAME ||
+        menuType === MENU_TYPE_LOAD_GAME ||
+        menuType === MENU_TYPE_NEW_GAME_CAMPAIGN
           ? mainMenuItems.map((item) => {
               const { type, state } = item;
 
