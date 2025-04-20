@@ -12,6 +12,9 @@ import { BUTTON_TYPE_CANCEL, BUTTON_TYPE_OK, DIALOG_TYPE_MESSAGE } from "@consta
 import { setEffectsVolume, setMusicVolume } from "@slices/systemOptionsSlice.js";
 import { showHomeScreen } from "@slices/homeScreenSlice.js";
 
+// import hooks
+import { useFullscreen } from "@hooks/useFullscreen.js";
+
 // import components
 import Dialog from "@common/Dialog/Dialog.jsx";
 
@@ -33,6 +36,7 @@ function StartGame() {
   const dispatch = useDispatch();
   const [isShowingDialog, setIsShowingDialog] = useState(true);
   const { t } = useTranslation("dialogs");
+  const { toggleFullscreen } = useFullscreen();
 
   /**
    * Handles user interaction with the dialog buttons and sets sound preferences accordingly.
@@ -54,6 +58,7 @@ function StartGame() {
     dispatch(setMusicVolume(defaultVolume));
     dispatch(setEffectsVolume(defaultVolume));
     dispatch(showHomeScreen(true));
+    toggleFullscreen();
   };
 
   return (
