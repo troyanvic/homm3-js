@@ -5,22 +5,26 @@ import { initReactI18next } from "react-i18next";
 import { LANGUAGE_EN } from "@constants";
 
 // import locales en locales
-import enDialogs from "@locales/en/dialogs.json";
-import enCredits from "@locales/en/credits.json";
+import enDialogs from "@enLocales/dialogs.json";
+import enCredits from "@enLocales/credits.json";
+import enScores from "@enLocales/scores.json";
 
 // import locales uk locales
-import ukDialogs from "@locales/uk/dialogs.json";
-import ukCredits from "@locales/uk/credits.json";
+import ukDialogs from "@ukLocales/dialogs.json";
+import ukCredits from "@ukLocales/credits.json";
+import ukScores from "@ukLocales/scores.json";
 
 i18n.use(initReactI18next).init({
   resources: {
     en: {
       dialogs: enDialogs,
       credits: enCredits,
+      scores: enScores,
     },
     uk: {
       dialogs: ukDialogs,
       credits: ukCredits,
+      scores: ukScores,
     },
   },
   lng: LANGUAGE_EN,
@@ -29,7 +33,7 @@ i18n.use(initReactI18next).init({
   interpolation: {
     escapeValue: false,
   },
-  ns: ["dialogs", "credits"],
+  ns: ["dialogs", "credits", "scores"],
   defaultNS: "dialogs",
 });
 

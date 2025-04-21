@@ -26,7 +26,7 @@ import {
 export const mainMenuItems = [
   { type: MENU_TYPE_NEW_GAME },
   { type: MENU_TYPE_LOAD_GAME },
-  { type: MENU_TYPE_SCORES, state: STATE_DISABLED },
+  { type: MENU_TYPE_SCORES },
   { type: MENU_TYPE_CREDITS },
   { type: MENU_TYPE_QUIT },
 ];

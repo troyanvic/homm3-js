@@ -16,6 +16,7 @@ import {
   MENU_TYPE_NEW_GAME,
   MENU_TYPE_NEW_GAME_CAMPAIGN,
   MENU_TYPE_QUIT,
+  MENU_TYPE_SCORES,
   STATE_ACTIVE,
   STATE_PRESSED,
 } from "@constants";
@@ -24,7 +25,7 @@ import {
 import { useKeypress } from "@hooks/useKeypress.js";
 
 // import selectors and actions
-import { selectIsShowingCredits, showCredits } from "@slices/homeScreenSlice.js";
+import { selectIsShowingCredits, showCredits, showMainMenu, showScores } from "@slices/homeScreenSlice.js";
 
 // import components
 import MenuSidebarItem from "@components/MenuSidebarItem/MenuSidebarItem.jsx";
@@ -80,6 +81,12 @@ function MenuSidebar() {
     // Switch to load game menu items when "Load Game" is selected
     if (type === MENU_TYPE_LOAD_GAME) {
       setMainMenuItems(loadGameMenuItems);
+    }
+
+    // Switch to the score board when "Highscore" is selected
+    if (type === MENU_TYPE_SCORES) {
+      dispatch(showScores(true));
+      dispatch(showMainMenu(false));
     }
 
     // Show credits screen when "Credits" menu item is selected

@@ -9,12 +9,19 @@ import mainTheme from "@sounds/main-theme.mp3";
 
 // import selectors and actions
 import { selectMusicVolume } from "@slices/systemOptionsSlice.js";
-import { selectIsShowingCredits, selectIsShowingMainMenu, showCredits, showMainMenu } from "@slices/homeScreenSlice.js";
+import {
+  selectIsShowingCredits,
+  selectIsShowingMainMenu,
+  selectIsShowingScores,
+  showCredits,
+  showMainMenu,
+} from "@slices/homeScreenSlice.js";
 
 // import components
 import InitialVideo from "@components/InitialVideo/InitialVideo.jsx";
 import MenuSidebar from "@components/MenuSidebar/MenuSidebar.jsx";
 import BackgroundMusic from "@components/BackgroundMusic/BackgroundMusic.jsx";
+import Scores from "@layout/Scores/Scores.jsx";
 
 /**
  * The `MainMenu` function is a React component that renders a dynamically resizable menu
@@ -45,6 +52,9 @@ function Home() {
   const musicVolume = useSelector(selectMusicVolume);
   const isShowingMainMenu = useSelector(selectIsShowingMainMenu);
   const isShowingCredits = useSelector(selectIsShowingCredits);
+  const isShowingScores = useSelector(selectIsShowingScores);
+
+  // Define dispatch function to update global state
   const dispatch = useDispatch();
 
   /**
@@ -52,7 +62,7 @@ function Home() {
    * showing, it dispatches an action to display the main menu.
    */
   const handleClick = () => {
-    if (!isShowingMainMenu) {
+    if (!isShowingMainMenu && !isShowingScores && !isShowingCredits) {
       dispatch(showMainMenu(true));
     }
 
@@ -131,19 +141,24 @@ function Home() {
     height: `${currentHeight}px`,
   };
 
+  // Construct class names for the container
+  const homeContainerClassName = "home-container";
+  const menuClassName = isShowingMainMenu ? ` ${homeContainerClassName}--is-menu` : "";
+  const scoresClassName = isShowingScores ? ` ${homeContainerClassName}--is-scores` : "";
+  const className = `${homeContainerClassName}${menuClassName}${scoresClassName}`;
+
+  // Render the main container with the calculated resolution and styles
   return (
     <main className="main-container" onClick={handleClick}>
-      <section
-        className={`home-container${isShowingMainMenu ? " home-container--is-menu" : ""}`}
-        style={containerStyles}
-      >
-        {isShowingMainMenu ? (
+      <section className={className} style={containerStyles}>
+        {!isShowingMainMenu && !isShowingScores ? (
+          <InitialVideo />
+        ) : (
           <>
-            <MenuSidebar />
+            {isShowingMainMenu && <MenuSidebar />}
+            {isShowingScores && <Scores />}
             {musicVolume !== 0 && <BackgroundMusic src={mainTheme} />}
           </>
-        ) : (
-          <InitialVideo />
         )}
       </section>
     </main>

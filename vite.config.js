@@ -22,6 +22,8 @@ export default defineConfig({
       "@i18n": path.resolve(__dirname, "./src/i18n"),
       "@layout": path.resolve(__dirname, "./src/layout"),
       "@locales": path.resolve(__dirname, "./src/locales"),
+      "@enLocales": path.resolve(__dirname, "./src/locales/en"),
+      "@ukLocales": path.resolve(__dirname, "./src/locales/uk"),
       "@store": path.resolve(__dirname, "./src/store"),
       "@slices": path.resolve(__dirname, "./src/store/slices"),
       "@styles": path.resolve(__dirname, "./src/styles"),
