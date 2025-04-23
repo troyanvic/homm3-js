@@ -5,6 +5,7 @@
   height: 100%;
   padding: 15px 90px 20px 80px;
   background-image: url("@images/highscore-bg.png");
+  background-size: contain;
 
   &-head,
   &-row {
@@ -24,6 +25,7 @@
   &-column-item {
     margin: 0 8px;
     padding: 0 4px;
+    font-weight: 400;
     text-align: center;
 
     &:first-child {
