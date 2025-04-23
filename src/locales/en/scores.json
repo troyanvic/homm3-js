@@ -1,4 +1,35 @@
 {
-  "message_line_1": "The Score board under development.",
-  "message_line_2": "To return to the Main menu press ESC key."
+  "head": {
+    "rank": "Rank",
+    "player": "Player",
+    "land": "Land",
+    "days": "Days",
+    "points": "Score"
+  },
+  "players": {
+    "player1": "Sandro",
+    "player2": "Astral",
+    "player3": "Oris",
+    "player4": "Lord Haart",
+    "player5": "Alamar",
+    "player6": "Styg",
+    "player7": "Yog",
+    "player8": "Ajit",
+    "player9": "Iona",
+    "player10": "Tazar",
+    "player11": "Your Name"
+  },
+  "lands": {
+    "land1": "Dead and Buried",
+    "land2": "All for One",
+    "land3": "Knee Deep in the Dead",
+    "land4": "Titans's Winter",
+    "land5": "Dragon Orb",
+    "land6": "Emerald Isles",
+    "land7": "Overthrow Thy Neighbors",
+    "land8": "Search for the Grail",
+    "land9": "The Mandate of Heaven",
+    "land10": "Myth and Legend",
+    "land11": "Just play a Map"
+  }
 }
