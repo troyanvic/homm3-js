@@ -1,18 +1,21 @@
 import { memo, useEffect, useRef } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 
 // import styles
 import styles from "./Scores.module.scss";
 
 // import constants
-import { KEY_ESCAPE } from "@constants";
+import { KEY_ESCAPE, STATE_ACTIVE } from "@constants";
 
 // import hooks
 import { useKeypress } from "@hooks/useKeypress.js";
 
 // import actions
 import { showMainMenu, showScores } from "@slices/homeScreenSlice.js";
+
+// import selectors
+import { selectLanguage } from "@slices/systemOptionsSlice.js";
 
 // import scores
 import { useScoreListTranslated } from "@layout/Scores/scoreList.js";
@@ -26,6 +29,24 @@ import { useScoreListTranslated } from "@layout/Scores/scoreList.js";
  */
 const ScoresColumnItem = memo(function ScoreItem({ children }) {
   return <div className={styles.scoresColumnItem}>{children}</div>;
+});
+
+/**
+ * ScoresButton is a memoized functional component that renders a button in the scores table.
+ *
+ * @param {Object} props - The component props
+ * @param {string} props.position - The position of the button in the table
+ * @param {string} props.type - The type of the button
+ * @param {string} props.state - The state of the button
+ * @returns {React.ReactElement} A span element with the scores button styling
+ */
+const ScoresButton = memo(function ScoresButton({ position = "top-left", type = "camp", state = "" }) {
+  // Get the language from the Redux state
+  const language = useSelector(selectLanguage);
+  const activeClass = state === STATE_ACTIVE ? styles[`scores-btn--${state}`] : "";
+  const className = `${styles.scoresBtn} ${styles[`scores-btn--${position}`]} ${styles[`scores-btn--${type}-${language}`]} ${activeClass}`;
+
+  return <span className={className} />;
 });
 
 export default function Scores() {
@@ -94,6 +115,11 @@ export default function Scores() {
   return (
     <div className={styles.scores} ref={containerRef}>
       <div className={styles.scoresContent}>
+        <ScoresButton position="top-left" type="camp" state={STATE_ACTIVE} />
+        <ScoresButton position="bottom-left" type="std" />
+        <ScoresButton position="top-right" type="reset" />
+        <ScoresButton position="bottom-right" type="exit" />
+
         <div className={styles.scoresHead}>
           <ScoresColumnItem>{t("head.rank")}</ScoresColumnItem>
           <ScoresColumnItem>{t("head.player")}</ScoresColumnItem>
