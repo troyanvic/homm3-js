@@ -38,6 +38,10 @@ export const MENU_TYPE_ROE = "roe";
 export const MENU_TYPE_AB = "ab";
 export const MENU_TYPE_CUSTOM = "custom";
 
+// High score
+export const HIGH_SCORE_TYPE_CAMPAIGN = "camp";
+export const HIGH_SCORE_TYPE_STANDARD = "std";
+
 // Keyboard
 export const KEY_ENTER = "Enter";
 export const KEY_ESCAPE = "Escape";

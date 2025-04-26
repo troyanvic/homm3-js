@@ -1,4 +1,4 @@
-import { memo, useEffect, useRef } from "react";
+import { memo, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 
@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import styles from "./Scores.module.scss";
 
 // import constants
-import { KEY_ESCAPE, STATE_ACTIVE } from "@constants";
+import { HIGH_SCORE_TYPE_CAMPAIGN, HIGH_SCORE_TYPE_STANDARD, KEY_ESCAPE, STATE_ACTIVE } from "@constants";
 
 // import hooks
 import { useKeypress } from "@hooks/useKeypress.js";
@@ -18,7 +18,7 @@ import { showMainMenu, showScores } from "@slices/homeScreenSlice.js";
 import { selectLanguage } from "@slices/systemOptionsSlice.js";
 
 // import scores
-import { useScoreListTranslated } from "@layout/Scores/scoreList.js";
+import { useCampaignScoreListTranslated, useStandardScoreListTranslated } from "@layout/Scores/scoreList.js";
 
 /**
  * ScoresColumnItem is a memoized functional component that renders a column item in the scores table.
@@ -40,20 +40,44 @@ const ScoresColumnItem = memo(function ScoreItem({ children }) {
  * @param {string} props.state - The state of the button
  * @returns {React.ReactElement} A span element with the scores button styling
  */
-const ScoresButton = memo(function ScoresButton({ position = "top-left", type = "camp", state = "" }) {
-  // Get the language from the Redux state
+const ScoresButton = memo(function ScoresButton({
+  position = "top-left",
+  type = HIGH_SCORE_TYPE_CAMPAIGN,
+  state = "",
+  onClick = () => {},
+}) {
   const language = useSelector(selectLanguage);
   const activeClass = state === STATE_ACTIVE ? styles[`scores-btn--${state}`] : "";
   const className = `${styles.scoresBtn} ${styles[`scores-btn--${position}`]} ${styles[`scores-btn--${type}-${language}`]} ${activeClass}`;
 
-  return <span className={className} />;
+  return <span className={className} onClick={onClick} />;
 });
 
 export default function Scores() {
   const containerRef = useRef(null);
   const dispatch = useDispatch();
-  const scoreList = useScoreListTranslated();
   const { t } = useTranslation("scores");
+  const campaignScoreList = useCampaignScoreListTranslated();
+  const standardScoreList = useStandardScoreListTranslated();
+
+  const [currentType, setCurrentType] = useState(HIGH_SCORE_TYPE_CAMPAIGN);
+  const [scoreList, setScoreList] = useState(campaignScoreList);
+
+  /**
+   * Handles switching between campaign and standard score table types
+   * and updates the displayed score list accordingly.
+   *
+   * @param {string} type - The type of score table to display (either HIGH_SCORE_TYPE_CAMPAIGN or HIGH_SCORE_TYPE_STANDARD)
+   */
+  const handleChangeTableType = (type) => {
+    setCurrentType(type === HIGH_SCORE_TYPE_CAMPAIGN ? HIGH_SCORE_TYPE_CAMPAIGN : HIGH_SCORE_TYPE_STANDARD);
+    setScoreList(type === HIGH_SCORE_TYPE_CAMPAIGN ? campaignScoreList : standardScoreList);
+  };
+
+  const handleExit = () => {
+    dispatch(showScores(false));
+    dispatch(showMainMenu(true));
+  };
 
   // Handle resizing and maintain aspect ratio of contents
   useEffect(() => {
@@ -106,19 +130,26 @@ export default function Scores() {
   /**
    * Handle the "Escape" key press to exit the score screen and return to the main menu
    */
-  useKeypress(KEY_ESCAPE, () => {
-    dispatch(showScores(false));
-    dispatch(showMainMenu(true));
-  });
+  useKeypress(KEY_ESCAPE, () => handleExit());
 
   // Render the scores screen
   return (
     <div className={styles.scores} ref={containerRef}>
       <div className={styles.scoresContent}>
-        <ScoresButton position="top-left" type="camp" state={STATE_ACTIVE} />
-        <ScoresButton position="bottom-left" type="std" />
+        <ScoresButton
+          position="top-left"
+          type={HIGH_SCORE_TYPE_CAMPAIGN}
+          state={currentType === HIGH_SCORE_TYPE_CAMPAIGN ? STATE_ACTIVE : ""}
+          onClick={() => handleChangeTableType(HIGH_SCORE_TYPE_CAMPAIGN)}
+        />
+        <ScoresButton
+          position="bottom-left"
+          type={HIGH_SCORE_TYPE_STANDARD}
+          state={currentType === HIGH_SCORE_TYPE_STANDARD ? STATE_ACTIVE : ""}
+          onClick={() => handleChangeTableType(HIGH_SCORE_TYPE_STANDARD)}
+        />
         <ScoresButton position="top-right" type="reset" />
-        <ScoresButton position="bottom-right" type="exit" />
+        <ScoresButton position="bottom-right" type="exit" onClick={handleExit} />
 
         <div className={styles.scoresHead}>
           <ScoresColumnItem>{t("head.rank")}</ScoresColumnItem>
