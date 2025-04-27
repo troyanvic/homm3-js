@@ -80,8 +80,8 @@ export default function Scores() {
   const { t } = useTranslation("scores");
 
   // State for the current table type (either HIGH_SCORE_TYPE_CAMPAIGN or HIGH_SCORE_TYPE_STANDARD)
-  const [currentType, setCurrentType] = useState(HIGH_SCORE_TYPE_CAMPAIGN);
-  const [scoreList, setScoreList] = useState(campaignScoreList);
+  const [currentType, setCurrentType] = useState(HIGH_SCORE_TYPE_STANDARD);
+  const [scoreList, setScoreList] = useState(standardScoreList);
   const [exitButtonState, setExitButtonState] = useState("");
   const [isShowingResetDialog, setIsShowingResetDialog] = useState(false);
 
@@ -237,7 +237,8 @@ export default function Scores() {
           <ScoresColumnItem>{t("head.player")}</ScoresColumnItem>
           <ScoresColumnItem>{t("head.land")}</ScoresColumnItem>
           <ScoresColumnItem>
-            {t("head.days")} / {t("head.points")}
+            {currentType === HIGH_SCORE_TYPE_STANDARD && `${t("head.days")} / `}
+            {t("head.points")}
           </ScoresColumnItem>
           <ScoresColumnItem></ScoresColumnItem>
         </div>
@@ -251,7 +252,8 @@ export default function Scores() {
               <ScoresColumnItem>{player}</ScoresColumnItem>
               <ScoresColumnItem>{land}</ScoresColumnItem>
               <ScoresColumnItem>
-                {days} / {points}
+                {currentType === HIGH_SCORE_TYPE_STANDARD && `${days} / `}
+                {points}
               </ScoresColumnItem>
               <ScoresColumnItem>
                 {creature !== "" ? <img className={styles.scoresIcon} src={creature} alt={player} /> : false}
