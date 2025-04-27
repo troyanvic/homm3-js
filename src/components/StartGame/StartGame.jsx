@@ -60,13 +60,21 @@ function StartGame() {
     //toggleFullscreen();
   };
 
+  const soundPromptMessage = t("startGame.soundPrompt").split("||");
+
   return (
     <div className="start-game">
       {isShowingDialog && (
         <Dialog
           isOpen={true}
           type={DIALOG_TYPE_MESSAGE}
-          message={t("startGame.soundPrompt")}
+          message={
+            <>
+              {soundPromptMessage.map((paragraph, index) => (
+                <span key={index}>{paragraph}</span>
+              ))}
+            </>
+          }
           hasCancel
           onConfirm={() => handleClick(BUTTON_TYPE_OK)}
           onCancel={() => handleClick(BUTTON_TYPE_CANCEL)}

@@ -51,6 +51,8 @@ function App() {
     };
   }, []);
 
+  const screenSizeNotSupportedMessage = t("app.screenSizeNotSupported").split("||");
+
   return isWindowWidth >= 768 ? (
     isShowingHomeScreen ? (
       <Home />
@@ -62,7 +64,13 @@ function App() {
       <Dialog
         isOpen={true}
         type={DIALOG_TYPE_MESSAGE}
-        message={t("app.screenSizeNotSupported")}
+        message={
+          <>
+            {screenSizeNotSupportedMessage.map((paragraph, index) => (
+              <span key={index}>{paragraph}</span>
+            ))}
+          </>
+        }
         hasActions={false}
         hasCancel={false}
       />
