@@ -162,7 +162,7 @@ export default function Scores() {
         </div>
 
         {scoreList.map((score, index) => {
-          const { rank, player, land, days, points } = score;
+          const { rank, player, land, days, points, creature } = score;
 
           return (
             <div className={styles.scoresRow} key={index}>
@@ -172,7 +172,9 @@ export default function Scores() {
               <ScoresColumnItem>
                 {days} / {points}
               </ScoresColumnItem>
-              <ScoresColumnItem />
+              <ScoresColumnItem>
+                {creature !== "" ? <img className={styles.scoresIcon} src={creature} alt={player} /> : false}
+              </ScoresColumnItem>
             </div>
           );
         })}

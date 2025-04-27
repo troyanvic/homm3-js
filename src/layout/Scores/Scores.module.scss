@@ -177,6 +177,11 @@
       @include button("exit", "uk");
     }
   }
+
+  &-icon {
+    width: auto;
+    max-height: 40px;
+  }
 }
 
 @media (min-width: 1100px) {

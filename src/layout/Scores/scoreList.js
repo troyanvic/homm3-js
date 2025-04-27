@@ -1,5 +1,31 @@
 import { useTranslation } from "react-i18next";
 
+// import campaign creatures
+import campaignCreature1 from "@images/highscore/campaignCreature1.gif";
+import campaignCreature2 from "@images/highscore/campaignCreature2.gif";
+import campaignCreature3 from "@images/highscore/campaignCreature3.gif";
+import campaignCreature4 from "@images/highscore/campaignCreature4.png";
+import campaignCreature5 from "@images/highscore/campaignCreature5.gif";
+import campaignCreature6 from "@images/highscore/campaignCreature6.gif";
+import campaignCreature7 from "@images/highscore/campaignCreature7.gif";
+import campaignCreature8 from "@images/highscore/campaignCreature8.gif";
+import campaignCreature9 from "@images/highscore/campaignCreature9.png";
+import campaignCreature10 from "@images/highscore/campaignCreature10.gif";
+import campaignCreature11 from "@images/highscore/campaignCreature11.png";
+
+// import standard creatures
+import standardCreature1 from "@images/highscore/standardCreature1.gif";
+import standardCreature2 from "@images/highscore/standardCreature2.gif";
+import standardCreature3 from "@images/highscore/standardCreature3.gif";
+import standardCreature4 from "@images/highscore/standardCreature4.png";
+import standardCreature5 from "@images/highscore/standardCreature5.gif";
+import standardCreature6 from "@images/highscore/standardCreature6.gif";
+import standardCreature7 from "@images/highscore/standardCreature7.gif";
+import standardCreature8 from "@images/highscore/standardCreature8.gif";
+import standardCreature9 from "@images/highscore/standardCreature9.gif";
+import standardCreature10 from "@images/highscore/standardCreature10.gif";
+import standardCreature11 from "@images/highscore/standardCreature11.gif";
+
 export const useCampaignScoreListTranslated = () => {
   const { t } = useTranslation("scores");
 
@@ -10,7 +36,7 @@ export const useCampaignScoreListTranslated = () => {
       land: t("lands.campaignLand1"),
       days: 75,
       points: 200,
-      creature: "",
+      creature: campaignCreature1,
     },
     {
       rank: 2,
@@ -18,7 +44,7 @@ export const useCampaignScoreListTranslated = () => {
       land: t("lands.campaignLand2"),
       days: 100,
       points: 190,
-      creature: "",
+      creature: campaignCreature2,
     },
     {
       rank: 3,
@@ -26,7 +52,7 @@ export const useCampaignScoreListTranslated = () => {
       land: t("lands.campaignLand3"),
       days: 125,
       points: 180,
-      creature: "",
+      creature: campaignCreature3,
     },
     {
       rank: 4,
@@ -34,7 +60,7 @@ export const useCampaignScoreListTranslated = () => {
       land: t("lands.campaignLand4"),
       days: 150,
       points: 170,
-      creature: "",
+      creature: campaignCreature4,
     },
     {
       rank: 5,
@@ -42,7 +68,7 @@ export const useCampaignScoreListTranslated = () => {
       land: t("lands.campaignLand5"),
       days: 175,
       points: 160,
-      creature: "",
+      creature: campaignCreature5,
     },
     {
       rank: 6,
@@ -50,7 +76,7 @@ export const useCampaignScoreListTranslated = () => {
       land: t("lands.campaignLand6"),
       days: 200,
       points: 150,
-      creature: "",
+      creature: campaignCreature6,
     },
     {
       rank: 7,
@@ -58,7 +84,7 @@ export const useCampaignScoreListTranslated = () => {
       land: t("lands.campaignLand7"),
       days: 250,
       points: 140,
-      creature: "",
+      creature: campaignCreature7,
     },
     {
       rank: 8,
@@ -66,7 +92,7 @@ export const useCampaignScoreListTranslated = () => {
       land: t("lands.campaignLand8"),
       days: 500,
       points: 130,
-      creature: "",
+      creature: campaignCreature8,
     },
     {
       rank: 9,
@@ -74,7 +100,7 @@ export const useCampaignScoreListTranslated = () => {
       land: t("lands.campaignLand9"),
       days: 750,
       points: 120,
-      creature: "",
+      creature: campaignCreature9,
     },
     {
       rank: 10,
@@ -82,7 +108,7 @@ export const useCampaignScoreListTranslated = () => {
       land: t("lands.campaignLand10"),
       days: 1000,
       points: 100,
-      creature: "",
+      creature: campaignCreature10,
     },
     {
       rank: 11,
@@ -90,7 +116,7 @@ export const useCampaignScoreListTranslated = () => {
       land: t("lands.campaignLand11"),
       days: 2000,
       points: 1,
-      creature: "",
+      creature: campaignCreature11,
     },
   ];
 };
@@ -105,7 +131,7 @@ export const useStandardScoreListTranslated = () => {
       land: t("lands.standardLand1"),
       days: 75,
       points: 200,
-      creature: "",
+      creature: standardCreature1,
     },
     {
       rank: 2,
@@ -113,7 +139,7 @@ export const useStandardScoreListTranslated = () => {
       land: t("lands.standardLand2"),
       days: 100,
       points: 190,
-      creature: "",
+      creature: standardCreature2,
     },
     {
       rank: 3,
@@ -121,7 +147,7 @@ export const useStandardScoreListTranslated = () => {
       land: t("lands.standardLand3"),
       days: 125,
       points: 180,
-      creature: "",
+      creature: standardCreature3,
     },
     {
       rank: 4,
@@ -129,7 +155,7 @@ export const useStandardScoreListTranslated = () => {
       land: t("lands.standardLand4"),
       days: 150,
       points: 170,
-      creature: "",
+      creature: standardCreature4,
     },
     {
       rank: 5,
@@ -137,7 +163,7 @@ export const useStandardScoreListTranslated = () => {
       land: t("lands.standardLand5"),
       days: 175,
       points: 160,
-      creature: "",
+      creature: standardCreature5,
     },
     {
       rank: 6,
@@ -145,7 +171,7 @@ export const useStandardScoreListTranslated = () => {
       land: t("lands.standardLand6"),
       days: 200,
       points: 150,
-      creature: "",
+      creature: standardCreature6,
     },
     {
       rank: 7,
@@ -153,7 +179,7 @@ export const useStandardScoreListTranslated = () => {
       land: t("lands.standardLand7"),
       days: 250,
       points: 140,
-      creature: "",
+      creature: standardCreature7,
     },
     {
       rank: 8,
@@ -161,7 +187,7 @@ export const useStandardScoreListTranslated = () => {
       land: t("lands.standardLand8"),
       days: 500,
       points: 130,
-      creature: "",
+      creature: standardCreature8,
     },
     {
       rank: 9,
@@ -169,7 +195,7 @@ export const useStandardScoreListTranslated = () => {
       land: t("lands.standardLand9"),
       days: 750,
       points: 120,
-      creature: "",
+      creature: standardCreature9,
     },
     {
       rank: 10,
@@ -177,7 +203,7 @@ export const useStandardScoreListTranslated = () => {
       land: t("lands.standardLand10"),
       days: 1000,
       points: 100,
-      creature: "",
+      creature: standardCreature10,
     },
     {
       rank: 11,
@@ -185,7 +211,7 @@ export const useStandardScoreListTranslated = () => {
       land: t("lands.standardLand11"),
       days: 2000,
       points: 1,
-      creature: "",
+      creature: standardCreature11,
     },
   ];
 };
