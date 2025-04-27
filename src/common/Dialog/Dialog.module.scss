@@ -35,8 +35,19 @@
 
     &--type-message {
       display: flex;
+      flex-direction: column;
       align-items: center;
+      justify-content: center;
       min-height: 70px;
+    }
+
+    span {
+      display: block;
+      margin-bottom: 25px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
     }
   }
 

@@ -7,6 +7,7 @@ import styles from "./Scores.module.scss";
 
 // import constants
 import {
+  DIALOG_TYPE_MESSAGE,
   HIGH_SCORE_TYPE_CAMPAIGN,
   HIGH_SCORE_TYPE_STANDARD,
   KEY_ESCAPE,
@@ -26,6 +27,9 @@ import { selectLanguage } from "@slices/systemOptionsSlice.js";
 
 // import scores
 import { useCampaignScoreListTranslated, useStandardScoreListTranslated } from "@layout/Scores/scoreList.js";
+
+// import components
+import Dialog from "@common/Dialog/Dialog.jsx";
 
 /**
  * ScoresColumnItem is a memoized functional component that renders a column item in the scores table.
@@ -61,6 +65,13 @@ const ScoresButton = memo(function ScoresButton({
   return <span className={className} onClick={onClick} />;
 });
 
+/**
+ * Scores is a functional component that renders the scores screen.
+ * It displays the campaign and standard score tables and handles
+ * the interaction with the buttons and the reset button.
+ *
+ * @returns {React.ReactElement} A div element with the scores screen styling
+ */
 export default function Scores() {
   const containerRef = useRef(null);
   const dispatch = useDispatch();
@@ -72,6 +83,7 @@ export default function Scores() {
   const [currentType, setCurrentType] = useState(HIGH_SCORE_TYPE_CAMPAIGN);
   const [scoreList, setScoreList] = useState(campaignScoreList);
   const [exitButtonState, setExitButtonState] = useState("");
+  const [isShowingResetDialog, setIsShowingResetDialog] = useState(false);
 
   // Destructure functions from the custom hook for handling sound and click events
   const { handleMouseDown } = useClickWithSound(() => {}, 75, STATE_ACTIVE);
@@ -95,11 +107,12 @@ export default function Scores() {
   };
 
   /**
-   * Handles resetting the scores screen by triggering mouse down sound effect.
-   * Currently only plays the sound without actual reset functionality.
+   * Handles the reset action for the scores screen.
+   * Triggers the mouse down sound effect and displays the reset confirmation dialog.
    */
   const handleReset = () => {
     handleMouseDown();
+    setIsShowingResetDialog(true);
   };
 
   /**
@@ -111,6 +124,14 @@ export default function Scores() {
     closeScores();
   };
 
+  /**
+   * Simulates a button press by managing button state transitions and executing callbacks with delays.
+   *
+   * @param {Function} setButtonState - Function to update the button's state
+   * @param {Function} callback - Function to be executed after the button press simulation
+   * @param {number} [releaseDelay=125] - Delay in milliseconds before releasing the button state
+   * @param {number} [actionDelay=175] - Delay in milliseconds before executing the callback
+   */
   const simulateButtonPress = (setButtonState, callback, releaseDelay = 125, actionDelay = 175) => {
     handleMouseDown();
     setButtonState(STATE_PRESSED);
@@ -122,6 +143,19 @@ export default function Scores() {
     setTimeout(() => {
       callback();
     }, actionDelay);
+  };
+
+  const handleConfirmReset = () => {
+    console.log("handleConfirmReset");
+    setIsShowingResetDialog(false);
+  };
+
+  /**
+   * Handles the cancellation of the reset scores dialog.
+   * Closes the reset confirmation dialog by setting isShowingResetDialog to false.
+   */
+  const handleCancelReset = () => {
+    setIsShowingResetDialog(false);
   };
 
   // Handle resizing and maintain aspect ratio of contents
@@ -177,6 +211,8 @@ export default function Scores() {
    */
   useKeypress(KEY_ESCAPE, () => simulateButtonPress(setExitButtonState, closeScores));
 
+  const resetMessage = t("resetMessage").split("||");
+
   // Render the scores screen
   return (
     <div className={styles.scores} ref={containerRef}>
@@ -224,6 +260,23 @@ export default function Scores() {
           );
         })}
       </div>
+
+      {isShowingResetDialog && (
+        <Dialog
+          isOpen={isShowingResetDialog}
+          type={DIALOG_TYPE_MESSAGE}
+          message={
+            <>
+              {resetMessage.map((paragraph, index) => (
+                <span key={index}>{paragraph}</span>
+              ))}
+            </>
+          }
+          hasCancel
+          onConfirm={handleConfirmReset}
+          onCancel={handleCancelReset}
+        />
+      )}
     </div>
   );
 }

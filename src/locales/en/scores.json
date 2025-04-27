@@ -53,5 +53,6 @@
     "standardLand9": "Kingdoms at War",
     "standardLand10": "Valley of Heroes",
     "standardLand11": "Random Map"
-  }
+  },
+  "resetMessage": "Resetting High Scores will delete any accomplishments you have achieved.||Are you sure you want to reset the High Scores?"
 }
