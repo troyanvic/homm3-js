@@ -133,6 +133,10 @@
       }
     }
 
+    &--pressed {
+      background-position: -42px 0;
+    }
+
     &--top {
       &-left {
         top: 112px;

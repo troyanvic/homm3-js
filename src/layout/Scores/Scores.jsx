@@ -6,10 +6,17 @@ import { useTranslation } from "react-i18next";
 import styles from "./Scores.module.scss";
 
 // import constants
-import { HIGH_SCORE_TYPE_CAMPAIGN, HIGH_SCORE_TYPE_STANDARD, KEY_ESCAPE, STATE_ACTIVE } from "@constants";
+import {
+  HIGH_SCORE_TYPE_CAMPAIGN,
+  HIGH_SCORE_TYPE_STANDARD,
+  KEY_ESCAPE,
+  STATE_ACTIVE,
+  STATE_PRESSED,
+} from "@constants";
 
 // import hooks
 import { useKeypress } from "@hooks/useKeypress.js";
+import { useClickWithSound } from "@hooks/useClickWithSound.js";
 
 // import actions
 import { showMainMenu, showScores } from "@slices/homeScreenSlice.js";
@@ -48,7 +55,8 @@ const ScoresButton = memo(function ScoresButton({
 }) {
   const language = useSelector(selectLanguage);
   const activeClass = state === STATE_ACTIVE ? styles[`scores-btn--${state}`] : "";
-  const className = `${styles.scoresBtn} ${styles[`scores-btn--${position}`]} ${styles[`scores-btn--${type}-${language}`]} ${activeClass}`;
+  const pressedClass = state === STATE_PRESSED ? styles[`scores-btn--${state}`] : "";
+  const className = `${styles.scoresBtn} ${styles[`scores-btn--${position}`]} ${styles[`scores-btn--${type}-${language}`]} ${activeClass} ${pressedClass}`;
 
   return <span className={className} onClick={onClick} />;
 });
@@ -56,12 +64,23 @@ const ScoresButton = memo(function ScoresButton({
 export default function Scores() {
   const containerRef = useRef(null);
   const dispatch = useDispatch();
-  const { t } = useTranslation("scores");
   const campaignScoreList = useCampaignScoreListTranslated();
   const standardScoreList = useStandardScoreListTranslated();
+  const { t } = useTranslation("scores");
 
+  // State for the current table type (either HIGH_SCORE_TYPE_CAMPAIGN or HIGH_SCORE_TYPE_STANDARD)
   const [currentType, setCurrentType] = useState(HIGH_SCORE_TYPE_CAMPAIGN);
   const [scoreList, setScoreList] = useState(campaignScoreList);
+  const [exitButtonState, setExitButtonState] = useState("");
+
+  // Destructure functions from the custom hook for handling sound and click events
+  const { handleMouseDown } = useClickWithSound(() => {}, 75, STATE_ACTIVE);
+
+  // Handle exiting the scores screen by hiding scores view and showing main menu
+  const closeScores = () => {
+    dispatch(showScores(false));
+    dispatch(showMainMenu(true));
+  };
 
   /**
    * Handles switching between campaign and standard score table types
@@ -72,11 +91,37 @@ export default function Scores() {
   const handleChangeTableType = (type) => {
     setCurrentType(type === HIGH_SCORE_TYPE_CAMPAIGN ? HIGH_SCORE_TYPE_CAMPAIGN : HIGH_SCORE_TYPE_STANDARD);
     setScoreList(type === HIGH_SCORE_TYPE_CAMPAIGN ? campaignScoreList : standardScoreList);
+    handleMouseDown();
   };
 
+  /**
+   * Handles resetting the scores screen by triggering mouse down sound effect.
+   * Currently only plays the sound without actual reset functionality.
+   */
+  const handleReset = () => {
+    handleMouseDown();
+  };
+
+  /**
+   * Handles exiting the scores screen by hiding scores view and showing main menu.
+   * Also triggers mouse down sound effect.
+   */
   const handleExit = () => {
-    dispatch(showScores(false));
-    dispatch(showMainMenu(true));
+    handleMouseDown();
+    closeScores();
+  };
+
+  const simulateButtonPress = (setButtonState, callback, releaseDelay = 125, actionDelay = 175) => {
+    handleMouseDown();
+    setButtonState(STATE_PRESSED);
+
+    setTimeout(() => {
+      setButtonState("");
+    }, releaseDelay);
+
+    setTimeout(() => {
+      callback();
+    }, actionDelay);
   };
 
   // Handle resizing and maintain aspect ratio of contents
@@ -130,7 +175,7 @@ export default function Scores() {
   /**
    * Handle the "Escape" key press to exit the score screen and return to the main menu
    */
-  useKeypress(KEY_ESCAPE, () => handleExit());
+  useKeypress(KEY_ESCAPE, () => simulateButtonPress(setExitButtonState, closeScores));
 
   // Render the scores screen
   return (
@@ -148,8 +193,8 @@ export default function Scores() {
           state={currentType === HIGH_SCORE_TYPE_STANDARD ? STATE_ACTIVE : ""}
           onClick={() => handleChangeTableType(HIGH_SCORE_TYPE_STANDARD)}
         />
-        <ScoresButton position="top-right" type="reset" />
-        <ScoresButton position="bottom-right" type="exit" onClick={handleExit} />
+        <ScoresButton position="top-right" type="reset" onClick={handleReset} />
+        <ScoresButton position="bottom-right" type="exit" state={exitButtonState} onClick={handleExit} />
 
         <div className={styles.scoresHead}>
           <ScoresColumnItem>{t("head.rank")}</ScoresColumnItem>
